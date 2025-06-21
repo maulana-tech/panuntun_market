@@ -43,30 +43,114 @@ Sistem ini memiliki dua hak akses utama, yaitu **Admin** dan **Owner**, dengan f
 7.  [cite_start]**Tabel Kas Keluar**: Menyimpan data dari setiap transaksi kas yang keluar.
 8.  [cite_start]**Tabel Kas**: Berfungsi sebagai buku besar yang mencatat semua transaksi kas masuk, keluar, dan saldo akhir.
 
-## Panduan Instalasi
+## Panduan Instalasi dan Menjalankan Server
 
 Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah berikut:
+
+### Prasyarat
+* XAMPP atau WAMP terinstall
+* PHP 7.4 atau lebih tinggi
+* MySQL 5.7 atau lebih tinggi
+* Web browser (Chrome, Firefox, dll.)
+
+### Langkah-langkah Instalasi
 
 1.  **Clone Repositori**
     ```bash
     git clone https://github.com/maulana-tech/panuntun_market.git
     ```
+
 2.  **Pindahkan ke Direktori Server**
-    * Pindahkan folder proyek `panuntun_minimarket_kas` ke dalam direktori `htdocs` (jika menggunakan XAMPP) atau `www` (jika menggunakan WAMP).
+    * Pindahkan folder proyek `panuntun_market` ke dalam direktori `htdocs` (jika menggunakan XAMPP) atau `www` (jika menggunakan WAMP).
+    * Pastikan path lengkapnya adalah: `/Applications/XAMPP/xamppfiles/htdocs/panuntun_market/` (untuk macOS) atau `C:\xampp\htdocs\panuntun_market\` (untuk Windows)
 
 3.  **Setup Database**
-    * Buka phpMyAdmin (`http://localhost/phpmyadmin`).
-    * Buat database baru dengan nama (misalnya) `db_kas_panuntun`.
-    * Impor file `.sql` yang berisi struktur tabel ke dalam database yang baru Anda buat.
+    * Pastikan XAMPP sudah berjalan (Apache dan MySQL)
+    * Buka phpMyAdmin di browser: `http://localhost/phpmyadmin`
+    * Buat database baru dengan nama: `db_minimarket_panuntun`
+    * Impor file `db.sql` yang ada di root proyek ke dalam database yang baru dibuat:
+      - Klik database `db_minimarket_panuntun`
+      - Pilih tab "Import"
+      - Choose file: pilih `db.sql` dari folder proyek
+      - Klik "Go" untuk mengimpor
 
-4.  **Konfigurasi Koneksi**
-    * Buka file `src/config.php`.
-    * Sesuaikan detail koneksi database (`$host`, `$user`, `$pass`, `$dbname`) dengan konfigurasi server lokal Anda.
+4.  **Konfigurasi Database** (Opsional)
+    * File konfigurasi database sudah diatur di `config/config.php`
+    * Jika perlu mengubah pengaturan database, edit file tersebut:
+    ```php
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'db_minimarket_panuntun');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    ```
 
-5.  **Jalankan Aplikasi**
-    * Buka browser Anda dan akses proyek melalui URL:
+### Cara Menjalankan Server
+
+#### Opsi 1: Menggunakan XAMPP (Rekomendasi)
+1.  **Start XAMPP Services**
+    * Buka XAMPP Control Panel
+    * Klik "Start" untuk Apache dan MySQL
+    * Pastikan kedua service berstatus "Running" (hijau)
+
+2.  **Akses Aplikasi**
+    * Buka browser dan kunjungi: `http://localhost/panuntun_market/pages/`
+    * Atau langsung ke halaman login: `http://localhost/panuntun_market/pages/login.php`
+
+#### Opsi 2: Menggunakan PHP Built-in Server
+1.  **Buka Terminal/Command Prompt**
+    * Navigasi ke folder proyek:
+    ```bash
+    cd /Applications/XAMPP/xamppfiles/htdocs/panuntun_market
     ```
-    http://localhost/panuntun_minimarket_kas/public/
+
+2.  **Jalankan MySQL terlebih dahulu**
+    * Pastikan MySQL XAMPP sudah berjalan
+    * Atau start MySQL melalui XAMPP Control Panel
+
+3.  **Start PHP Server**
+    ```bash
+    php -S localhost:8000 -t pages/
     ```
+
+4.  **Akses Aplikasi**
+    * Buka browser dan kunjungi: `http://localhost:8000`
+    * Atau langsung ke: `http://localhost:8000/login.php`
+
+### Mengakses Aplikasi
+
+#### Default Login Credentials
+**Admin:**
+- Username: `admin`
+- Password: `admin123`
+
+**Owner:**
+- Username: `owner`
+- Password: `owner123`
+
+*(Catatan: Ganti password default setelah login pertama untuk keamanan)*
+
+### Troubleshooting
+
+**Problem: Database connection error**
+- Pastikan MySQL service di XAMPP sudah running
+- Cek apakah database `db_minimarket_panuntun` sudah dibuat
+- Verifikasi pengaturan di `config/config.php`
+
+**Problem: Page not found (404)**
+- Pastikan Apache service di XAMPP sudah running
+- Cek apakah folder proyek sudah berada di `htdocs`
+- Verifikasi URL yang diakses
+
+**Problem: PHP errors**
+- Pastikan PHP version minimal 7.4
+- Cek PHP error log di XAMPP control panel
+
+### Menghentikan Server
+
+**Jika menggunakan XAMPP:**
+- Klik "Stop" untuk Apache dan MySQL di XAMPP Control Panel
+
+**Jika menggunakan PHP built-in server:**
+- Tekan `Ctrl+C` di terminal untuk menghentikan server
 
 ## Struktur Folder Proyek
