@@ -49,7 +49,7 @@ Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah ber
 
 1.  **Clone Repositori**
     ```bash
-    git clone https://[URL_repositori_Anda].git
+    git clone https://github.com/maulana-tech/panuntun_market.git
     ```
 2.  **Pindahkan ke Direktori Server**
     * Pindahkan folder proyek `panuntun_minimarket_kas` ke dalam direktori `htdocs` (jika menggunakan XAMPP) atau `www` (jika menggunakan WAMP).
