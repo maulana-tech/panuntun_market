@@ -1,16 +1,29 @@
 <?php
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'db_minimarket_panuntun');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 
-$db_server = "localhost";
-$db_username = "root";
-$db_password = "";
-$db_name = "db_minimarket";
+// Application configuration
+define('APP_NAME', 'Cash Flow in Minimarket Panuntun');
+define('APP_VERSION', '1.0.0');
+define('BASE_URL', 'http://localhost:8000');
 
-$mysqli = new mysqli($db_server, $db_username, $db_password, $db_name);
+// Security configuration
+define('JWT_SECRET', 'your-secret-key-here-change-in-production');
+define('SESSION_TIMEOUT', 3600); // 1 hour
 
-if ($mysqli->connect_error) {
-    die("KONEKSI GAGAL: " . $mysqli->connect_error);
+// Timezone
+date_default_timezone_set('Asia/Jakarta');
+
+// Error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Start session
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-
-$mysqli->set_charset("utf8");
-
 ?>
+
