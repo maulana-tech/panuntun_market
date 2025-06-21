@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/functions.php';
+require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $pageTitle = 'Login';
-include 'components/header.php';
+include dirname(__DIR__) . '/components/header.php';
 ?>
 
 <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -145,5 +145,5 @@ include 'components/header.php';
     </div>
 </div>
 
-<?php include 'components/footer.php'; ?>
+<?php include dirname(__DIR__) . '/components/footer.php'; ?>
 

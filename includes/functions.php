@@ -1,5 +1,10 @@
 <?php
-require_once 'config/config.php';
+// Start session first before any output
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once dirname(__DIR__) . '/config/config.php';
 
 class Database {
     private $host = DB_HOST;
@@ -11,7 +16,14 @@ class Database {
     public function getConnection() {
         $this->conn = null;
         try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            // Use socket for localhost connections in XAMPP
+            if ($this->host === 'localhost' || $this->host === '127.0.0.1') {
+                $dsn = "mysql:unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock;dbname=" . $this->db_name;
+            } else {
+                $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->db_name;
+            }
+            
+            $this->conn = new PDO($dsn, $this->username, $this->password);
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $exception) {

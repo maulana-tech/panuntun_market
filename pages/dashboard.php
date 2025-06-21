@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/functions.php';
+require_once dirname(__DIR__) . '/includes/functions.php';
 requireLogin();
 
 $database = new Database();
@@ -8,11 +8,12 @@ $db = $database->getConnection();
 // Get dashboard statistics
 $stats = [];
 
-// Total cash balance
-$query = "SELECT COALESCE(SUM(jumlah), 0) as total_balance FROM kas";
+// Total cash balance (latest saldo from kas table)
+$query = "SELECT COALESCE(saldo, 0) as total_balance FROM kas ORDER BY created_at DESC LIMIT 1";
 $stmt = $db->prepare($query);
 $stmt->execute();
-$stats['cash_balance'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_balance'];
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$stats['cash_balance'] = $result ? $result['total_balance'] : 0;
 
 // Today's cash inflow
 $query = "SELECT COALESCE(SUM(jumlah), 0) as today_inflow FROM kas_masuk WHERE DATE(tgl_transaksi) = CURDATE()";
@@ -84,7 +85,7 @@ $stmt->execute();
 $cash_flow_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $pageTitle = 'Dashboard';
-include 'components/header.php';
+include dirname(__DIR__) . '/components/header.php';
 ?>
 
 <div class="fade-in">
@@ -404,6 +405,6 @@ cashFlowChart.update();
 </script>
 ";
 
-include 'components/footer.php';
+include dirname(__DIR__) . '/components/footer.php';
 ?>
 

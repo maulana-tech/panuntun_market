@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/functions.php';
+require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);
@@ -29,23 +29,20 @@ $method = $_SERVER['REQUEST_METHOD'];
 // Remove base path if exists
 $path = str_replace('/cash-flow-fullstack-php', '', $path);
 
-// Route to appropriate file
-if ($path === '/' || $path === '/index.php') {
-    if (isLoggedIn()) {
-        include 'dashboard.php';
+// Simple routing for this application
+if (isLoggedIn()) {
+    // User is logged in, show dashboard
+    if (file_exists(__DIR__ . '/dashboard.php')) {
+        include __DIR__ . '/dashboard.php';
     } else {
-        include 'login.php';
+        echo "Dashboard not found";
     }
-} elseif (file_exists(__DIR__ . $path)) {
-    include __DIR__ . $path;
 } else {
-    // Check if it's a PHP file without extension
-    $phpFile = __DIR__ . $path . '.php';
-    if (file_exists($phpFile)) {
-        include $phpFile;
+    // User is not logged in, show login page
+    if (file_exists(__DIR__ . '/login.php')) {
+        include __DIR__ . '/login.php';
     } else {
-        http_response_code(404);
-        echo "Page not found";
+        echo "Login page not found";
     }
 }
 ?>
