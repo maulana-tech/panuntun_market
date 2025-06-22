@@ -1,156 +1,202 @@
-# Sistem Pengelolaan Kas Berbasis Web - Minimarket Panuntun
+# 🏪 Panuntun Market - Sistem Pengelolaan Kas
 
-Ini adalah sistem pengelolaan kas berbasis web yang dirancang untuk Minimarket Panuntun. [cite_start]Sistem ini bertujuan untuk mengatur, mencatat, dan melaporkan semua transaksi yang berhubungan dengan pemasukan dan pengeluaran kas. [cite_start]Sistem ini dibangun untuk berjalan di server lokal (localhost).
+> Sistem pengelolaan kas berbasis web untuk Minimarket Panuntun yang memudahkan pencatatan transaksi, manajemen inventory, dan pelaporan keuangan secara real-time.
 
-## Fitur Utama
+## 📋 Daftar Isi
+- [Fitur Utama](#-fitur-utama)
+- [Teknologi](#️-teknologi)
+- [Quick Start](#-quick-start)
+- [Instalasi Lengkap](#-instalasi-lengkap)
+- [Penggunaan](#-penggunaan)
+- [Struktur Database](#️-struktur-database)
+- [Troubleshooting](#-troubleshooting)
 
-Sistem ini memiliki dua hak akses utama, yaitu **Admin** dan **Owner**, dengan fungsionalitas yang berbeda.
+## ✨ Fitur Utama
 
-### Fitur Admin
-* [cite_start]Mengelola (input) data pengguna, data supplier, dan data barang.
-* [cite_start]Mencatat transaksi pembelian dan penjualan.
-* [cite_start]Secara otomatis membuat catatan kas masuk dari setiap transaksi penjualan.
-* [cite_start]Secara otomatis membuat catatan kas keluar dari setiap transaksi pembelian.
-* [cite_start]Melihat daftar data seperti daftar pengguna, supplier, barang, pembelian, dan penjualan.
+### 👨‍💼 Admin Dashboard
+- ✅ **Manajemen Data** - Kelola pengguna, supplier, dan produk
+- 💰 **Transaksi** - Catat pembelian dan penjualan
+- 📊 **Kas Otomatis** - Auto-generate kas masuk/keluar dari transaksi
+- 📋 **Laporan** - Lihat semua data dan riwayat transaksi
 
-### Fitur Owner
-* [cite_start]Melihat data pengguna yang terdaftar.
-* [cite_start]Mengakses dan mencetak laporan-laporan penting, seperti:
-    * [cite_start]Daftar Pengguna, Supplier, dan Barang.
-    * [cite_start]Jurnal Umum.
-    * [cite_start]Laporan Kas Masuk per Periode.
-    * [cite_start]Laporan Kas Keluar per Periode.
-    * [cite_start]Laporan Kas.
+### 👑 Owner Dashboard
+- 👥 **Monitoring User** - Pantau pengguna yang terdaftar
+- 📈 **Laporan Lengkap** - Akses semua laporan bisnis
+  - Jurnal Umum
+  - Laporan Kas Masuk/Keluar per Periode
+  - Laporan Inventory
+  - Dan masih banyak lagi
 
-## Teknologi yang Digunakan
+## 🛠️ Teknologi
 
-[cite_start]Proyek ini dikembangkan menggunakan tumpukan teknologi berikut:
-* **Bahasa Pemrograman**: PHP
-* **Database**: MySQL
-* **Sistem Operasi**: Windows 10
-* **Web Server**: Localhost (seperti XAMPP, WAMP)
-* **Browser**: Chrome
+| Komponen | Teknologi |
+|----------|----------|
+| **Backend** | PHP 7.4+ |
+| **Database** | MySQL 5.7+ |
+| **Server** | Apache (XAMPP) |
+| **Frontend** | HTML, CSS, JavaScript |
+| **Platform** | Cross-platform (Windows, macOS, Linux) |
 
-## Desain Database
+## 🚀 Quick Start
 
-[cite_start]Sistem ini menggunakan basis data relasional dengan 8 tabel utama untuk menyimpan semua data secara terstruktur.
-1.  [cite_start]**Tabel Pengguna**: Menyimpan data pengguna yang dapat mengakses sistem.
-2.  [cite_start]**Tabel Barang**: Menyimpan informasi barang yang dijual atau dibeli.
-3.  [cite_start]**Tabel Supplier**: Menyimpan data supplier yang memasok barang.
-4.  [cite_start]**Tabel Pembelian**: Mencatat semua detail transaksi pembelian barang.
-5.  [cite_start]**Tabel Penjualan**: Mencatat semua detail transaksi penjualan barang.
-6.  [cite_start]**Tabel Kas Masuk**: Menyimpan data dari setiap transaksi kas yang masuk.
-7.  [cite_start]**Tabel Kas Keluar**: Menyimpan data dari setiap transaksi kas yang keluar.
-8.  [cite_start]**Tabel Kas**: Berfungsi sebagai buku besar yang mencatat semua transaksi kas masuk, keluar, dan saldo akhir.
+```bash
+# 1. Clone repository
+git clone https://github.com/maulana-tech/panuntun_market.git
 
-## Panduan Instalasi dan Menjalankan Server
+# 2. Pindah ke direktori XAMPP
+mv panuntun_market /Applications/XAMPP/xamppfiles/htdocs/
 
-Untuk menjalankan proyek ini di lingkungan lokal Anda, ikuti langkah-langkah berikut:
+# 3. Start XAMPP services
+# Buka XAMPP Control Panel dan start Apache + MySQL
+
+# 4. Setup database
+# Buka http://localhost/phpmyadmin
+# Buat database: db_minimarket_panuntun
+# Import file: db.sql
+
+# 5. Akses aplikasi
+# http://localhost/panuntun_market/
+```
+
+## 📦 Instalasi Lengkap
 
 ### Prasyarat
-* XAMPP atau WAMP terinstall
-* PHP 7.4 atau lebih tinggi
-* MySQL 5.7 atau lebih tinggi
-* Web browser (Chrome, Firefox, dll.)
+- [XAMPP](https://www.apachefriends.org/) atau WAMP
+- PHP 7.4 atau lebih tinggi
+- MySQL 5.7 atau lebih tinggi
+- Web browser modern
 
-### Langkah-langkah Instalasi
+### Langkah Instalasi
 
-1.  **Clone Repositori**
-    ```bash
-    git clone https://github.com/maulana-tech/panuntun_market.git
-    ```
+#### 1️⃣ Download & Setup
+```bash
+# Clone repository
+git clone https://github.com/maulana-tech/panuntun_market.git
 
-2.  **Pindahkan ke Direktori Server**
-    * Pindahkan folder proyek `panuntun_market` ke dalam direktori `htdocs` (jika menggunakan XAMPP) atau `www` (jika menggunakan WAMP).
-    * Pastikan path lengkapnya adalah: `/Applications/XAMPP/xamppfiles/htdocs/panuntun_market/` (untuk macOS) atau `C:\xampp\htdocs\panuntun_market\` (untuk Windows)
+# Pindahkan ke direktori server
+# Windows: C:\xampp\htdocs\panuntun_market\
+# macOS: /Applications/XAMPP/xamppfiles/htdocs/panuntun_market/
+# Linux: /opt/lampp/htdocs/panuntun_market/
+```
 
-3.  **Setup Database**
-    * Pastikan XAMPP sudah berjalan (Apache dan MySQL)
-    * Buka phpMyAdmin di browser: `http://localhost/phpmyadmin`
-    * Buat database baru dengan nama: `db_minimarket_panuntun`
-    * Impor file `db.sql` yang ada di root proyek ke dalam database yang baru dibuat:
-      - Klik database `db_minimarket_panuntun`
-      - Pilih tab "Import"
-      - Choose file: pilih `db.sql` dari folder proyek
-      - Klik "Go" untuk mengimpor
+#### 2️⃣ Database Setup
+1. **Start XAMPP** - Jalankan Apache dan MySQL
+2. **Buka phpMyAdmin** - Kunjungi `http://localhost/phpmyadmin`
+3. **Buat Database**
+   - Nama: `db_minimarket_panuntun`
+4. **Import Database**
+   - Pilih database yang baru dibuat
+   - Tab "Import" → Choose file → Pilih `db.sql`
+   - Klik "Go"
 
-4.  **Konfigurasi Database** (Opsional)
-    * File konfigurasi database sudah diatur di `config/config.php`
-    * Jika perlu mengubah pengaturan database, edit file tersebut:
-    ```php
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'db_minimarket_panuntun');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
-    ```
+#### 3️⃣ Konfigurasi (Opsional)
+Jika perlu mengubah setting database, edit `config/config.php`:
+```php
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'db_minimarket_panuntun');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+```
 
-### Cara Menjalankan Server
+## 🎯 Penggunaan
 
-#### Opsi 1: Menggunakan XAMPP (Rekomendasi)
-1.  **Start XAMPP Services**
-    * Buka XAMPP Control Panel
-    * Klik "Start" untuk Apache dan MySQL
-    * Pastikan kedua service berstatus "Running" (hijau)
+### Akses Aplikasi
+- **URL Utama**: `http://localhost/panuntun_market/`
+- **Login**: `http://localhost/panuntun_market/auth/login.php`
 
-2.  **Akses Aplikasi**
-    * Buka browser dan kunjungi: `http://localhost/panuntun_market/pages/`
-    * Atau langsung ke halaman login: `http://localhost/panuntun_market/pages/login.php`
+### Default Login
+| Role | Username | Password |
+|------|----------|----------|
+| **Admin** | `admin` | `admin123` |
+| **Owner** | `owner` | `owner123` |
 
-#### Opsi 2: Menggunakan PHP Built-in Server
-1.  **Buka Terminal/Command Prompt**
-    * Navigasi ke folder proyek:
-    ```bash
-    cd /Applications/XAMPP/xamppfiles/htdocs/panuntun_market
-    ```
+> ⚠️ **Penting**: Ubah password default setelah login pertama untuk keamanan!
 
-2.  **Jalankan MySQL terlebih dahulu**
-    * Pastikan MySQL XAMPP sudah berjalan
-    * Atau start MySQL melalui XAMPP Control Panel
+### Struktur Folder
+```
+panuntun_market/
+├── index.php              # Halaman utama
+├── auth/                   # Sistem autentikasi
+│   ├── login.php
+│   └── logout.php
+├── components/             # Komponen UI
+│   ├── header.php
+│   ├── footer.php
+│   └── navigation.php
+├── config/                 # Konfigurasi database
+├── pages/                  # Halaman aplikasi
+│   ├── dashboard.php
+│   ├── users.php
+│   ├── products.php
+│   ├── suppliers.php
+│   ├── sales.php
+│   ├── purchases.php
+│   └── reports/           # Laporan
+├── assets/                # CSS, JS, Images
+├── includes/              # Functions & utilities
+└── db.sql                # Database schema
+```
 
-3.  **Start PHP Server**
-    ```bash
-    php -S localhost:8000 -t pages/
-    ```
+## 🗃️ Struktur Database
 
-4.  **Akses Aplikasi**
-    * Buka browser dan kunjungi: `http://localhost:8000`
-    * Atau langsung ke: `http://localhost:8000/login.php`
+Sistem menggunakan 8 tabel utama:
 
-### Mengakses Aplikasi
+| Tabel | Fungsi |
+|-------|--------|
+| **users** | Data pengguna sistem |
+| **products** | Informasi produk/barang |
+| **suppliers** | Data supplier |
+| **purchases** | Transaksi pembelian |
+| **sales** | Transaksi penjualan |
+| **cash_inflow** | Kas masuk |
+| **cash_outflow** | Kas keluar |
+| **cash_ledger** | Buku besar kas |
 
-#### Default Login Credentials
-**Admin:**
-- Username: `admin`
-- Password: `admin123`
+## 🔧 Troubleshooting
 
-**Owner:**
-- Username: `owner`
-- Password: `owner123`
+### ❌ Database Connection Error
+```
+Solusi:
+✅ Pastikan MySQL service running di XAMPP
+✅ Cek database 'db_minimarket_panuntun' sudah dibuat
+✅ Verifikasi config/config.php
+```
 
-*(Catatan: Ganti password default setelah login pertama untuk keamanan)*
+### ❌ Page Not Found (404)
+```
+Solusi:
+✅ Pastikan Apache service running di XAMPP
+✅ Cek folder proyek di htdocs/
+✅ Verifikasi URL yang diakses
+```
 
-### Troubleshooting
+### ❌ PHP Errors
+```
+Solusi:
+✅ Pastikan PHP version minimal 7.4
+✅ Cek PHP error log di XAMPP control panel
+✅ Pastikan semua ekstensi PHP terinstall
+```
 
-**Problem: Database connection error**
-- Pastikan MySQL service di XAMPP sudah running
-- Cek apakah database `db_minimarket_panuntun` sudah dibuat
-- Verifikasi pengaturan di `config/config.php`
+### 🔄 Cara Stop Server
+- **XAMPP**: Klik "Stop" untuk Apache dan MySQL
+- **Command Line**: `Ctrl+C` jika menggunakan built-in server
 
-**Problem: Page not found (404)**
-- Pastikan Apache service di XAMPP sudah running
-- Cek apakah folder proyek sudah berada di `htdocs`
-- Verifikasi URL yang diakses
+---
 
-**Problem: PHP errors**
-- Pastikan PHP version minimal 7.4
-- Cek PHP error log di XAMPP control panel
+## 📞 Support
 
-### Menghentikan Server
+Jika mengalami masalah, silakan:
+1. Cek [Issues](https://github.com/maulana-tech/panuntun_market/issues) yang sudah ada
+2. Buat issue baru dengan detail masalah
+3. Contact developer
 
-**Jika menggunakan XAMPP:**
-- Klik "Stop" untuk Apache dan MySQL di XAMPP Control Panel
+---
 
-**Jika menggunakan PHP built-in server:**
-- Tekan `Ctrl+C` di terminal untuk menghentikan server
+<div align="center">
 
-## Struktur Folder Proyek
+**🎉 Happy Coding! 🎉**
+
+Dibuat dengan ❤️ untuk Minimarket Panuntun
+
+</div>
