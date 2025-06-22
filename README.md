@@ -182,16 +182,6 @@ Solusi:
 - **XAMPP**: Klik "Stop" untuk Apache dan MySQL
 - **Command Line**: `Ctrl+C` jika menggunakan built-in server
 
----
-
-## 📞 Support
-
-Jika mengalami masalah, silakan:
-1. Cek [Issues](https://github.com/maulana-tech/panuntun_market/issues) yang sudah ada
-2. Buat issue baru dengan detail masalah
-3. Contact developer
-
----
 
 <div align="center">
 
