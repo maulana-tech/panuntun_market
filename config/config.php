@@ -6,7 +6,7 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 
 // Application configuration
-define('APP_NAME', 'Cash Flow in Minimarket Panuntun');
+define('APP_NAME', 'Cash Flow ');
 define('APP_VERSION', '1.0.0');
 define('BASE_URL', 'http://localhost:8000');
 
@@ -23,4 +23,3 @@ ini_set('display_errors', 1);
 
 // Session is started in functions.php to avoid conflicts
 ?>
-

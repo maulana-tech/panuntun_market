@@ -135,5 +135,15 @@ function generateCSRFToken() {
 function validateCSRFToken($token) {
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
+
+// user role checks
+function requireAdmin() {
+    $user = getCurrentUser();
+    if (!$user || $user['jabatan'] !== 'Admin') {
+        $_SESSION['alert'] = ['type' => 'error', 'message' => 'Akses ditolak. Hanya Admin yang dapat mengakses halaman ini.'];
+        header('Location: dashboard.php');
+        exit();
+    }
+}
 ?>
 
