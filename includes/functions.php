@@ -83,6 +83,10 @@ function formatDate($date) {
     return date('d/m/Y', strtotime($date));
 }
 
+function formatDateTime($datetime) {
+    return date('d/m/Y H:i:s', strtotime($datetime));
+}
+
 function showAlert($message, $type = 'info') {
     $alertClass = '';
     $iconClass = '';

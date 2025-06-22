@@ -1,0 +1,7 @@
+{
+    "name": "panuntun/market",
+    "description": "Panuntun Market Project",
+    "require": {
+        "setasign/fpdf": "^1.8"
+    }
+}

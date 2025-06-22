@@ -1,0 +1,71 @@
+# Composer dependencies
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Log files
+*.log
+logs/
+log/
+
+# Cache directories
+cache/
+tmp/
+temp/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# PHP specific
+*.php~
+*.php.bak
+
+# Configuration files (sensitive)
+config/database.php
+config/config.local.php
+
+# Upload directories
+uploads/
+files/
+images/uploads/
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Node modules (if using any frontend tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build directories
+build/
+dist/
+
+# Database files
+*.sqlite
+*.db
+
+# Session files
+sessions/
+
+# Error logs
+error_log
+php_errors.log
