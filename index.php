@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/includes/functions.php';
+require_once __DIR__ . '/includes/functions.php';
 
 // Enable error reporting for debugging
 error_reporting(E_ALL);
@@ -27,23 +27,22 @@ $path = parse_url($request_uri, PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
 
 // Remove base path if exists
-$path = str_replace('/cash-flow-fullstack-php', '', $path);
+$path = str_replace('/panuntun_market', '', $path);
 
 // Simple routing for this application
 if (isLoggedIn()) {
     // User is logged in, show dashboard
-    if (file_exists(__DIR__ . '/dashboard.php')) {
-        include __DIR__ . '/dashboard.php';
+    if (file_exists(__DIR__ . '/pages/dashboard.php')) {
+        include __DIR__ . '/pages/dashboard.php';
     } else {
         echo "Dashboard not found";
     }
 } else {
     // User is not logged in, show login page
-    if (file_exists(__DIR__ . '/login.php')) {
-        include __DIR__ . '/login.php';
+    if (file_exists(__DIR__ . '/auth/login.php')) {
+        include __DIR__ . '/auth/login.php';
     } else {
         echo "Login page not found";
     }
 }
 ?>
-

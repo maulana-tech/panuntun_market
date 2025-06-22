@@ -3,7 +3,7 @@ require_once dirname(__DIR__) . '/includes/functions.php';
 
 // Redirect if already logged in
 if (isLoggedIn()) {
-    header('Location: dashboard.php');
+    header('Location: pages/dashboard.php');
     exit();
 }
 
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_role'] = $user['jabatan'];
                 $_SESSION['user_email'] = $user['email'];
                 
-                header('Location: dashboard.php');
+                header('Location: pages/dashboard.php');
                 exit();
             } else {
                 $error = 'Invalid email or password.';
