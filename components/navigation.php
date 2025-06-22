@@ -3,10 +3,20 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $user = getCurrentUser();
 $isAdmin = $user && $user['jabatan'] === 'Admin';
 
+// Determine the base path for navigation links
+$basePath = '';
+if (strpos($_SERVER['PHP_SELF'], '/auth/') !== false) {
+    $basePath = '../pages/';
+} elseif (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) {
+    $basePath = '';
+} else {
+    $basePath = 'pages/';
+}
+
 $navigation = [
     [
         'name' => 'Dashboard',
-        'href' => 'dashboard.php',
+        'href' => $basePath . 'dashboard.php',
         'icon' => 'M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z',
         'current' => $currentPage === 'dashboard'
     ],
@@ -18,18 +28,18 @@ $navigation = [
         'children' => [
             [
                 'name' => 'Users',
-                'href' => 'users.php',
+                'href' => $basePath . 'users.php',
                 'current' => $currentPage === 'users',
                 'admin_only' => true
             ],
             [
                 'name' => 'Suppliers',
-                'href' => 'suppliers.php',
+                'href' => $basePath . 'suppliers.php',
                 'current' => $currentPage === 'suppliers'
             ],
             [
                 'name' => 'Products',
-                'href' => 'products.php',
+                'href' => $basePath . 'products.php',
                 'current' => $currentPage === 'products'
             ]
         ]
@@ -42,12 +52,12 @@ $navigation = [
         'children' => [
             [
                 'name' => 'Sales',
-                'href' => 'sales.php',
+                'href' => $basePath . 'sales.php',
                 'current' => $currentPage === 'sales'
             ],
             [
                 'name' => 'Purchases',
-                'href' => 'purchases.php',
+                'href' => $basePath . 'purchases.php',
                 'current' => $currentPage === 'purchases'
             ]
         ]
@@ -60,23 +70,23 @@ $navigation = [
         'children' => [
             [
                 'name' => 'Cash Flow',
-                'href' => 'reports_cash_flow.php',
-                'current' => $currentPage === 'reports_cash_flow'
+                'href' => $basePath . 'reports.php',
+                'current' => $currentPage === 'reports'
             ],
             [
                 'name' => 'Sales Report',
-                'href' => 'reports_sales.php',
-                'current' => $currentPage === 'reports_sales'
+                'href' => $basePath . 'reports/cash_inflow.php',
+                'current' => $currentPage === 'cash_inflow'
             ],
             [
                 'name' => 'Purchase Report',
-                'href' => 'reports_purchases.php',
-                'current' => $currentPage === 'reports_purchases'
+                'href' => $basePath . 'reports/cash_outflow.php',
+                'current' => $currentPage === 'cash_outflow'
             ],
             [
                 'name' => 'Journal',
-                'href' => 'reports_journal.php',
-                'current' => $currentPage === 'reports_journal'
+                'href' => $basePath . 'reports/journal.php',
+                'current' => $currentPage === 'journal'
             ]
         ]
     ]
