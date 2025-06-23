@@ -198,20 +198,15 @@
                                 </button>
                                 
                                 <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5">
-                                    <?php 
-                                    // Determine logout path with better logic
-                                    $logoutPath = 'auth/logout.php'; // Default
-                                    $currentPath = $_SERVER['PHP_SELF'];
-                                    
-                                    if (strpos($currentPath, '/auth/') !== false) {
+                                <?php 
+                                    // Determine logout path
+                                    $logoutPath = '';
+                                    if (strpos($_SERVER['PHP_SELF'], '/auth/') !== false) {
                                         $logoutPath = 'logout.php';
-                                    } elseif (strpos($currentPath, '/pages/') !== false) {
-                                        // Count directory depth to determine relative path
-                                        $depth = substr_count(str_replace('/pages/', '', $currentPath), '/');
-                                        $prefix = str_repeat('../', $depth + 1);
-                                        $logoutPath = $prefix . 'auth/logout.php';
-                                    } elseif (strpos($currentPath, '/components/') !== false) {
+                                    } elseif (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) {
                                         $logoutPath = '../auth/logout.php';
+                                    } else {
+                                        $logoutPath = 'auth/logout.php';
                                     }
                                     ?>
                                     <a href="<?php echo $logoutPath; ?>" class="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50">Logout</a>
