@@ -15,20 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             case 'add':
                 $nama_supplier = sanitizeInput($_POST['nama_supplier'] ?? '');
                 $alamat = sanitizeInput($_POST['alamat'] ?? '');
-                $telepon = sanitizeInput($_POST['telepon'] ?? '');
-                $email = sanitizeInput($_POST['email'] ?? '');
-                $kontak_person = sanitizeInput($_POST['kontak_person'] ?? '');
+                $no_tlp = sanitizeInput($_POST['no_tlp'] ?? '');
                 
-                if (empty($nama_supplier) || empty($alamat) || empty($telepon)) {
+                if (empty($nama_supplier) || empty($alamat) || empty($no_tlp)) {
                     $error = 'Supplier name, address, and phone are required.';
                 } else {
-                    $query = "INSERT INTO supplier (nama_supplier, alamat, telepon, email, kontak_person) VALUES (:nama_supplier, :alamat, :telepon, :email, :kontak_person)";
+                    $query = "INSERT INTO supplier (nama_supplier, alamat, no_tlp) VALUES (:nama_supplier, :alamat, :no_tlp)";
                     $stmt = $db->prepare($query);
                     $stmt->bindParam(':nama_supplier', $nama_supplier);
                     $stmt->bindParam(':alamat', $alamat);
-                    $stmt->bindParam(':telepon', $telepon);
-                    $stmt->bindParam(':email', $email);
-                    $stmt->bindParam(':kontak_person', $kontak_person);
+                    $stmt->bindParam(':no_tlp', $no_tlp);
                     
                     if ($stmt->execute()) {
                         $success = 'Supplier added successfully.';
@@ -39,24 +35,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
                 
             case 'edit':
-                $id = intval($_POST['id'] ?? 0);
+                $id_supplier = intval($_POST['id_supplier'] ?? 0);
                 $nama_supplier = sanitizeInput($_POST['nama_supplier'] ?? '');
                 $alamat = sanitizeInput($_POST['alamat'] ?? '');
-                $telepon = sanitizeInput($_POST['telepon'] ?? '');
-                $email = sanitizeInput($_POST['email'] ?? '');
-                $kontak_person = sanitizeInput($_POST['kontak_person'] ?? '');
+                $no_tlp = sanitizeInput($_POST['no_tlp'] ?? '');
                 
-                if (empty($nama_supplier) || empty($alamat) || empty($telepon)) {
+                if (empty($nama_supplier) || empty($alamat) || empty($no_tlp) || $id_supplier === 0) {
                     $error = 'Supplier name, address, and phone are required.';
                 } else {
-                    $query = "UPDATE supplier SET nama_supplier = :nama_supplier, alamat = :alamat, telepon = :telepon, email = :email, kontak_person = :kontak_person WHERE id_supplier = :id";
+                    $query = "UPDATE supplier SET nama_supplier = :nama_supplier, alamat = :alamat, no_tlp = :no_tlp, updated_at = CURRENT_TIMESTAMP WHERE id_supplier = :id_supplier";
                     $stmt = $db->prepare($query);
                     $stmt->bindParam(':nama_supplier', $nama_supplier);
                     $stmt->bindParam(':alamat', $alamat);
-                    $stmt->bindParam(':telepon', $telepon);
-                    $stmt->bindParam(':email', $email);
-                    $stmt->bindParam(':kontak_person', $kontak_person);
-                    $stmt->bindParam(':id', $id);
+                    $stmt->bindParam(':no_tlp', $no_tlp);
+                    $stmt->bindParam(':id_supplier', $id_supplier);
                     
                     if ($stmt->execute()) {
                         $success = 'Supplier updated successfully.';
@@ -67,21 +59,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
                 
             case 'delete':
-                $id = intval($_POST['id'] ?? 0);
+                $id_supplier = intval($_POST['id_supplier'] ?? 0);
                 
                 // Check if supplier has related purchases
-                $query = "SELECT COUNT(*) as count FROM pembelian WHERE id_supplier = :id";
+                $query = "SELECT COUNT(*) as count FROM pembelian WHERE id_supplier = :id_supplier";
                 $stmt = $db->prepare($query);
-                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':id_supplier', $id_supplier);
                 $stmt->execute();
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 
                 if ($result['count'] > 0) {
                     $error = 'Cannot delete supplier. There are existing purchase records associated with this supplier.';
                 } else {
-                    $query = "DELETE FROM supplier WHERE id_supplier = :id";
+                    $query = "DELETE FROM supplier WHERE id_supplier = :id_supplier";
                     $stmt = $db->prepare($query);
-                    $stmt->bindParam(':id', $id);
+                    $stmt->bindParam(':id_supplier', $id_supplier);
                     
                     if ($stmt->execute()) {
                         $success = 'Supplier deleted successfully.';
@@ -95,13 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Get all suppliers
-$query = "SELECT s.*, 
-          COUNT(p.id_pembelian) as total_purchases,
-          COALESCE(SUM(p.total_pembelian), 0) as total_amount
-          FROM supplier s 
-          LEFT JOIN pembelian p ON s.id_supplier = p.id_supplier 
-          GROUP BY s.id_supplier 
-          ORDER BY s.nama_supplier ASC";
+// Simplified query according to the new schema. 
+// For purchase details, it's better to query the v_purchase_details view separately if needed.
+$query = "SELECT id_supplier, nama_supplier, no_tlp, alamat 
+          FROM supplier 
+          ORDER BY nama_supplier ASC";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $suppliers = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -112,7 +102,6 @@ include dirname(__DIR__) . '/components/header.php';
 ?>
 
 <div class="fade-in">
-    <!-- Page Header -->
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
@@ -128,7 +117,6 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
     </div>
 
-    <!-- Alert Messages -->
     <?php if ($error): ?>
         <div class="mb-6 rounded-md bg-red-50 p-4">
             <div class="flex">
@@ -159,7 +147,6 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
     <?php endif; ?>
 
-    <!-- Suppliers Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php if (empty($suppliers)): ?>
             <div class="col-span-full">
@@ -214,7 +201,7 @@ include dirname(__DIR__) . '/components/header.php';
                         
                         <div class="space-y-3">
                             <div class="flex items-start">
-                                <svg class="w-4 h-4 text-gray-400 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-gray-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
@@ -222,39 +209,10 @@ include dirname(__DIR__) . '/components/header.php';
                             </div>
                             
                             <div class="flex items-center">
-                                <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 text-gray-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
-                                <span class="text-sm text-gray-600"><?php echo htmlspecialchars($supplier['telepon'] ?? ''); ?></span>
-                            </div>
-                            
-                            <?php if (!empty($supplier['email'])): ?>
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                    </svg>
-                                    <span class="text-sm text-gray-600"><?php echo htmlspecialchars($supplier['email']); ?></span>
-                                </div>
-                            <?php endif; ?>
-                            
-                            <?php if (!empty($supplier['kontak_person'])): ?>
-                                <div class="flex items-center">
-                                    <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                                    </svg>
-                                    <span class="text-sm text-gray-600"><?php echo htmlspecialchars($supplier['kontak_person']); ?></span>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <div class="mt-4 pt-4 border-t border-gray-200">
-                            <div class="flex justify-between text-sm">
-                                <div class="text-gray-500">
-                                    <span class="font-medium"><?php echo $supplier['total_purchases']; ?></span> purchases
-                                </div>
-                                <div class="text-gray-900 font-medium">
-                                    <?php echo formatCurrency($supplier['total_amount']); ?>
-                                </div>
+                                <span class="text-sm text-gray-600"><?php echo htmlspecialchars($supplier['no_tlp'] ?? ''); ?></span>
                             </div>
                         </div>
                     </div>
@@ -264,7 +222,6 @@ include dirname(__DIR__) . '/components/header.php';
     </div>
 </div>
 
-<!-- Add Supplier Modal -->
 <div id="addModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3">
@@ -292,20 +249,8 @@ include dirname(__DIR__) . '/components/header.php';
                 </div>
                 
                 <div>
-                    <label for="add_telepon" class="block text-sm font-medium text-gray-700">Phone *</label>
-                    <input type="text" id="add_telepon" name="telepon" required 
-                           class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                </div>
-                
-                <div>
-                    <label for="add_email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="add_email" name="email" 
-                           class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                </div>
-                
-                <div>
-                    <label for="add_kontak_person" class="block text-sm font-medium text-gray-700">Contact Person</label>
-                    <input type="text" id="add_kontak_person" name="kontak_person" 
+                    <label for="add_no_tlp" class="block text-sm font-medium text-gray-700">Phone *</label>
+                    <input type="text" id="add_no_tlp" name="no_tlp" required 
                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                 </div>
                 
@@ -324,7 +269,6 @@ include dirname(__DIR__) . '/components/header.php';
     </div>
 </div>
 
-<!-- Edit Supplier Modal -->
 <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3">
@@ -338,7 +282,7 @@ include dirname(__DIR__) . '/components/header.php';
             </div>
             <form method="POST" class="space-y-4">
                 <input type="hidden" name="action" value="edit">
-                <input type="hidden" id="edit_id" name="id">
+                <input type="hidden" id="edit_id_supplier" name="id_supplier">
                 
                 <div>
                     <label for="edit_nama_supplier" class="block text-sm font-medium text-gray-700">Supplier Name *</label>
@@ -353,20 +297,8 @@ include dirname(__DIR__) . '/components/header.php';
                 </div>
                 
                 <div>
-                    <label for="edit_telepon" class="block text-sm font-medium text-gray-700">Phone *</label>
-                    <input type="text" id="edit_telepon" name="telepon" required 
-                           class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                </div>
-                
-                <div>
-                    <label for="edit_email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="edit_email" name="email" 
-                           class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
-                </div>
-                
-                <div>
-                    <label for="edit_kontak_person" class="block text-sm font-medium text-gray-700">Contact Person</label>
-                    <input type="text" id="edit_kontak_person" name="kontak_person" 
+                    <label for="edit_no_tlp" class="block text-sm font-medium text-gray-700">Phone *</label>
+                    <input type="text" id="edit_no_tlp" name="no_tlp" required 
                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-primary-500 focus:border-primary-500">
                 </div>
                 
@@ -385,7 +317,6 @@ include dirname(__DIR__) . '/components/header.php';
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3 text-center">
@@ -399,7 +330,7 @@ include dirname(__DIR__) . '/components/header.php';
             
             <form method="POST" class="flex justify-center space-x-3">
                 <input type="hidden" name="action" value="delete">
-                <input type="hidden" id="delete_id" name="id">
+                <input type="hidden" id="delete_id_supplier" name="id_supplier">
                 
                 <button type="button" onclick="closeDeleteModal()" 
                         class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
@@ -427,12 +358,10 @@ function closeAddModal() {
 }
 
 function openEditModal(supplier) {
-    document.getElementById('edit_id').value = supplier.id_supplier;
+    document.getElementById('edit_id_supplier').value = supplier.id_supplier;
     document.getElementById('edit_nama_supplier').value = supplier.nama_supplier;
     document.getElementById('edit_alamat').value = supplier.alamat;
-    document.getElementById('edit_telepon').value = supplier.telepon;
-    document.getElementById('edit_email').value = supplier.email || '';
-    document.getElementById('edit_kontak_person').value = supplier.kontak_person || '';
+    document.getElementById('edit_no_tlp').value = supplier.no_tlp;
     document.getElementById('editModal').classList.remove('hidden');
 }
 
@@ -442,7 +371,7 @@ function closeEditModal() {
 }
 
 function confirmDelete(id, name) {
-    document.getElementById('delete_id').value = id;
+    document.getElementById('delete_id_supplier').value = id;
     document.getElementById('deleteSupplierName').textContent = name;
     document.getElementById('deleteModal').classList.remove('hidden');
 }
@@ -473,4 +402,3 @@ window.onclick = function(event) {
 include dirname(__DIR__) . '/components/footer.php';
 
 ?>
-

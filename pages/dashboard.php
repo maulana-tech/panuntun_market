@@ -307,7 +307,7 @@ include dirname(__DIR__) . '/components/header.php';
                     </div>
                 </a>
 
-                <a href="reports_cash_flow.php" class="group relative rounded-lg p-6 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 transform hover:scale-105">
+                <a href="./reports/cash_inflow.php" class="group relative rounded-lg p-6 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-200 transform hover:scale-105">
                     <div>
                         <span class="rounded-lg inline-flex p-3 bg-white bg-opacity-20">
                             <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">

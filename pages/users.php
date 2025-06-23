@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_user'])) {
             $_SESSION['alert'] = ['type' => 'error', 'message' => 'Password wajib diisi untuk pengguna baru.'];
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $db->prepare("INSERT INTO pengguna (nama, email, jabatan, pass) VALUES (?, ?, ?, ?)");
+            $stmt = $db->prepare("INSERT INTO pengguna (nama, email, jabatan, password) VALUES (?, ?, ?, ?)");
             $stmt->execute([$nama, $email, $jabatan, $hashedPassword]);
             $_SESSION['alert'] = ['type' => 'success', 'message' => 'Pengguna baru berhasil ditambahkan.'];
         }

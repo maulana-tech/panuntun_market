@@ -50,7 +50,9 @@ require_once dirname(__DIR__, 2) . '/components/header.php';
 
 
 ?>
-
+<?php
+ require_once dirname(__DIR__, 2) . '/components/header.php';
+?>
 <div class="px-6 py-4 border-b border-gray-200">
     <h3 class="text-lg font-medium text-gray-900">Laporan Kas Masuk (Penjualan)</h3>
     <p class="text-sm text-gray-600">Periode: <?php echo date('d/m/Y', strtotime($start_date)); ?> - <?php echo date('d/m/Y', strtotime($end_date)); ?></p>
