@@ -3,14 +3,31 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
 $user = getCurrentUser();
 $isAdmin = $user && $user['jabatan'] === 'Admin';
 
-// Determine the base path for navigation links
+// Improved base path determination
+$currentScript = $_SERVER['PHP_SELF'];
 $basePath = '';
-if (strpos($_SERVER['PHP_SELF'], '/auth/') !== false) {
+
+if (strpos($currentScript, '/auth/') !== false) {
     $basePath = '../pages/';
-} elseif (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) {
+} elseif (strpos($currentScript, '/pages/reports/') !== false) {
+    $basePath = '../';
+} elseif (strpos($currentScript, '/pages/') !== false) {
     $basePath = '';
 } else {
+    // Root level
     $basePath = 'pages/';
+}
+
+// For reports subfolder, we need special handling
+$reportsBasePath = '';
+if (strpos($currentScript, '/pages/reports/') !== false) {
+    $reportsBasePath = '';
+} elseif (strpos($currentScript, '/pages/') !== false) {
+    $reportsBasePath = 'reports/';
+} elseif (strpos($currentScript, '/auth/') !== false) {
+    $reportsBasePath = '../pages/reports/';
+} else {
+    $reportsBasePath = 'pages/reports/';
 }
 
 $navigation = [
@@ -75,17 +92,17 @@ $navigation = [
             ],
             [
                 'name' => 'Sales Report',
-                'href' => $basePath . 'reports/cash_inflow.php',
+                'href' => $reportsBasePath . 'cash_inflow.php',
                 'current' => $currentPage === 'cash_inflow'
             ],
             [
                 'name' => 'Purchase Report',
-                'href' => $basePath . 'reports/cash_outflow.php',
+                'href' => $reportsBasePath . 'cash_outflow.php',
                 'current' => $currentPage === 'cash_outflow'
             ],
             [
                 'name' => 'Journal',
-                'href' => $basePath . 'reports/journal.php',
+                'href' => $reportsBasePath . 'journal.php',
                 'current' => $currentPage === 'journal'
             ]
         ]
@@ -146,3 +163,10 @@ $navigation = [
     <?php endforeach; ?>
 </ul>
 
+<!-- Debug info (hapus setelah testing) -->
+<!-- 
+Current Script: <?php echo $currentScript; ?>
+Base Path: <?php echo $basePath; ?>
+Reports Base Path: <?php echo $reportsBasePath; ?>
+Current Page: <?php echo $currentPage; ?>
+-->

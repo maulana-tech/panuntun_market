@@ -1,79 +1,99 @@
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Cek jika variabel $db dan tanggal belum ada
+if (!isset($db) || !isset($start_date) || !isset($end_date)) {
+    require_once dirname(__DIR__, 2) . '/includes/functions.php';
+    
+    // Buat koneksi database jika belum ada
+    if (!isset($db)) {
+        $database = new Database();
+        $db = $database->getConnection();
+    }
+    
+    // Ambil tanggal dari URL jika belum ada
+    $start_date = $_GET['start_date'] ?? date('Y-m-01');
+    $end_date = $_GET['end_date'] ?? date('Y-m-t');
+}
 // Cash Outflow Report
 
 // Get cash outflow data with purchase details
 $query = "SELECT 
-    kk.tanggal,
-    kk.jumlah,
-    kk.keterangan,
-    p.jumlah as qty_purchased,
-    p.harga_satuan,
-    b.nama_barang,
-    s.nama_supplier,
-    u.nama as user_name
-FROM kas_keluar kk
-JOIN pembelian p ON kk.id_pembelian = p.id_pembelian
-JOIN barang b ON p.id_barang = b.id_barang
-JOIN supplier s ON p.id_supplier = s.id_supplier
-JOIN pengguna u ON p.id_pengguna = u.id_pengguna
-WHERE DATE(kk.tanggal) BETWEEN :start_date AND :end_date
-ORDER BY kk.tanggal DESC";
+        kk.tgl_transaksi as tanggal,
+        kk.jumlah,
+        kk.keterangan,
+        p.qty as qty_purchased,
+        p.harga as harga_satuan,
+        b.nama_barang,
+        s.nama_supplier,
+        kk.created_at
+    FROM kas_keluar kk
+    JOIN pembelian p ON kk.id_pembelian = p.id_pembelian
+    JOIN barang b ON p.kode_barang = b.kode_barang
+    JOIN supplier s ON p.id_supplier = s.id_supplier
+    WHERE DATE(kk.tgl_transaksi) BETWEEN :start_date AND :end_date
+    ORDER BY kk.tgl_transaksi DESC";
 
-$stmt = $db->prepare($query);
-$stmt->bindParam(':start_date', $start_date);
-$stmt->bindParam(':end_date', $end_date);
-$stmt->execute();
-$cash_outflow_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':start_date', $start_date);
+    $stmt->bindParam(':end_date', $end_date);
+    $stmt->execute();
+    $cash_outflow_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get summary statistics
-$query = "SELECT 
-    COUNT(*) as total_transactions,
-    SUM(jumlah) as total_amount,
-    AVG(jumlah) as average_amount,
-    MAX(jumlah) as max_amount,
-    MIN(jumlah) as min_amount
-FROM kas_keluar 
-WHERE DATE(tanggal) BETWEEN :start_date AND :end_date";
+    // Get summary statistics
+    $query = "SELECT 
+        COUNT(*) as total_transactions,
+        SUM(jumlah) as total_amount,
+        AVG(jumlah) as average_amount,
+        MAX(jumlah) as max_amount,
+        MIN(jumlah) as min_amount
+    FROM kas_keluar 
+    WHERE DATE(tgl_transaksi) BETWEEN :start_date AND :end_date";
 
-$stmt = $db->prepare($query);
-$stmt->bindParam(':start_date', $start_date);
-$stmt->bindParam(':end_date', $end_date);
-$stmt->execute();
-$summary_stats = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':start_date', $start_date);
+    $stmt->bindParam(':end_date', $end_date);
+    $stmt->execute();
+    $summary_stats = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Get supplier breakdown
-$query = "SELECT 
-    s.nama_supplier,
-    COUNT(kk.id_kas_keluar) as transaction_count,
-    SUM(kk.jumlah) as total_amount
-FROM kas_keluar kk
-JOIN pembelian p ON kk.id_pembelian = p.id_pembelian
-JOIN supplier s ON p.id_supplier = s.id_supplier
-WHERE DATE(kk.tanggal) BETWEEN :start_date AND :end_date
-GROUP BY s.id_supplier, s.nama_supplier
-ORDER BY total_amount DESC";
+    // Get supplier breakdown
+    $query = "SELECT 
+        s.nama_supplier,
+        COUNT(kk.id_kas_keluar) as transaction_count,
+        SUM(kk.jumlah) as total_amount
+    FROM kas_keluar kk
+    JOIN pembelian p ON kk.id_pembelian = p.id_pembelian
+    JOIN supplier s ON p.id_supplier = s.id_supplier
+    WHERE DATE(kk.tgl_transaksi) BETWEEN :start_date AND :end_date
+    GROUP BY s.id_supplier, s.nama_supplier
+    ORDER BY total_amount DESC";
 
-$stmt = $db->prepare($query);
-$stmt->bindParam(':start_date', $start_date);
-$stmt->bindParam(':end_date', $end_date);
-$stmt->execute();
-$supplier_breakdown = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':start_date', $start_date);
+    $stmt->bindParam(':end_date', $end_date);
+    $stmt->execute();
+    $supplier_breakdown = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get daily totals
-$query = "SELECT 
-    DATE(tanggal) as date,
-    COUNT(*) as transaction_count,
-    SUM(jumlah) as daily_total
-FROM kas_keluar 
-WHERE DATE(tanggal) BETWEEN :start_date AND :end_date
-GROUP BY DATE(tanggal)
-ORDER BY date ASC";
+    // Get daily totals
+    $query = "SELECT 
+        DATE(tgl_transaksi) as date,
+        COUNT(*) as transaction_count,
+        SUM(jumlah) as daily_total
+    FROM kas_keluar 
+    WHERE DATE(tgl_transaksi) BETWEEN :start_date AND :end_date
+    GROUP BY DATE(tgl_transaksi)
+    ORDER BY date ASC";
 
-$stmt = $db->prepare($query);
-$stmt->bindParam(':start_date', $start_date);
-$stmt->bindParam(':end_date', $end_date);
-$stmt->execute();
-$daily_totals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':start_date', $start_date);
+    $stmt->bindParam(':end_date', $end_date);
+    $stmt->execute();
+    $daily_totals = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    require_once dirname(__DIR__, 2) . '/components/header.php';
+
 ?>
 
 <div class="px-6 py-4 border-b border-gray-200">

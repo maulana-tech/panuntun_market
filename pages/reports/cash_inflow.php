@@ -45,6 +45,10 @@ $stmt_summary->bindParam(':start_date', $start_date);
 $stmt_summary->bindParam(':end_date', $end_date);
 $stmt_summary->execute();
 $summary_stats = $stmt_summary->fetch(PDO::FETCH_ASSOC);
+
+require_once dirname(__DIR__, 2) . '/components/header.php';
+
+
 ?>
 
 <div class="px-6 py-4 border-b border-gray-200">

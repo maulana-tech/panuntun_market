@@ -107,16 +107,36 @@
                             </div>
                             <nav class="flex flex-1 flex-col">
                                 <?php 
-                                // Determine the correct path for navigation include
+                                // Determine correct path for navigation.php based on actual directory structure
                                 $navPath = '';
-                                if (strpos($_SERVER['PHP_SELF'], '/auth/') !== false) {
-                                    $navPath = '../components/navigation.php';
-                                } elseif (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) {
-                                    $navPath = '../components/navigation.php';
+                                $currentScript = $_SERVER['PHP_SELF'];
+                                
+                                // Since header.php is in components/ and navigation.php is also in components/
+                                // We need to find the correct relative path
+                                if (basename(__FILE__) === 'header.php') {
+                                    // header.php is in components/, so navigation.php is in same directory
+                                    $navPath = dirname(__FILE__) . '/navigation.php';
                                 } else {
-                                    $navPath = 'components/navigation.php';
+                                    // Fallback: try different paths based on current script location
+                                    if (strpos($currentScript, '/pages/reports/') !== false) {
+                                        $navPath = '../../components/navigation.php';
+                                    } elseif (strpos($currentScript, '/pages/') !== false) {
+                                        $navPath = '../components/navigation.php';
+                                    } elseif (strpos($currentScript, '/auth/') !== false) {
+                                        $navPath = '../components/navigation.php';
+                                    } else {
+                                        // Root level
+                                        $navPath = 'components/navigation.php';
+                                    }
                                 }
-                                include $navPath; 
+                                
+                                // Include with error handling
+                                if (file_exists($navPath)) {
+                                    include $navPath;
+                                } else {
+                                    echo "<!-- Navigation file not found at: $navPath -->";
+                                    echo '<div class="text-red-500 text-sm p-4">Navigation menu unavailable<br><small>Looking for: ' . htmlspecialchars($navPath) . '</small></div>';
+                                }
                                 ?>
                             </nav>
                         </div>
@@ -131,7 +151,15 @@
                         <h1 class="text-xl font-bold text-primary-600"><?php echo APP_NAME; ?></h1>
                     </div>
                     <nav class="flex flex-1 flex-col">
-                        <?php include $navPath; ?>
+                        <?php 
+                        // Use the same navigation path logic for desktop sidebar
+                        if (file_exists($navPath)) {
+                            include $navPath;
+                        } else {
+                            echo "<!-- Navigation file not found at: $navPath -->";
+                            echo '<div class="text-red-500 text-sm p-4">Navigation menu unavailable<br><small>Looking for: ' . htmlspecialchars($navPath) . '</small></div>';
+                        }
+                        ?>
                     </nav>
                 </div>
             </div>
@@ -171,14 +199,19 @@
                                 
                                 <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5">
                                     <?php 
-                                    // Determine logout path
-                                    $logoutPath = '';
-                                    if (strpos($_SERVER['PHP_SELF'], '/auth/') !== false) {
+                                    // Determine logout path with better logic
+                                    $logoutPath = 'auth/logout.php'; // Default
+                                    $currentPath = $_SERVER['PHP_SELF'];
+                                    
+                                    if (strpos($currentPath, '/auth/') !== false) {
                                         $logoutPath = 'logout.php';
-                                    } elseif (strpos($_SERVER['PHP_SELF'], '/pages/') !== false) {
+                                    } elseif (strpos($currentPath, '/pages/') !== false) {
+                                        // Count directory depth to determine relative path
+                                        $depth = substr_count(str_replace('/pages/', '', $currentPath), '/');
+                                        $prefix = str_repeat('../', $depth + 1);
+                                        $logoutPath = $prefix . 'auth/logout.php';
+                                    } elseif (strpos($currentPath, '/components/') !== false) {
                                         $logoutPath = '../auth/logout.php';
-                                    } else {
-                                        $logoutPath = 'auth/logout.php';
                                     }
                                     ?>
                                     <a href="<?php echo $logoutPath; ?>" class="block px-3 py-1 text-sm leading-6 text-gray-900 hover:bg-gray-50">Logout</a>
@@ -196,4 +229,3 @@
             <main class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
                 <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <?php endif; ?>
-

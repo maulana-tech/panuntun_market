@@ -1,44 +1,60 @@
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+// Cek jika variabel $db dan tanggal belum ada
+if (!isset($db) || !isset($start_date) || !isset($end_date)) {
+    require_once dirname(__DIR__, 2) . '/includes/functions.php';
+    
+    // Buat koneksi database jika belum ada
+    if (!isset($db)) {
+        $database = new Database();
+        $db = $database->getConnection();
+    }
+    
+    // Ambil tanggal dari URL jika belum ada
+    $start_date = $_GET['start_date'] ?? date('Y-m-01');
+    $end_date = $_GET['end_date'] ?? date('Y-m-t');
+}
 // Journal Report - Complete transaction history
 
 // Get all transactions (both sales and purchases) with details
 $query = "
     SELECT 
         'Sale' as transaction_type,
-        p.tanggal_penjualan as transaction_date,
+        p.tgl_jual as transaction_date,
         b.nama_barang as item_name,
-        p.jumlah as quantity,
-        b.satuan as unit,
-        p.harga_satuan as unit_price,
+        p.qty as quantity,
+        'pcs' as unit,
+        p.harga as unit_price,
         p.total_penjualan as total_amount,
         'Cash Inflow' as cash_flow_type,
-        u.nama as user_name,
+        'System User' as user_name,
         NULL as supplier_name,
-        p.keterangan as notes
+        CONCAT('Sale of ', b.nama_barang) as notes
     FROM penjualan p
-    JOIN barang b ON p.id_barang = b.id_barang
-    JOIN pengguna u ON p.id_pengguna = u.id_pengguna
-    WHERE DATE(p.tanggal_penjualan) BETWEEN :start_date AND :end_date
+    JOIN barang b ON p.kode_barang = b.kode_barang
+    WHERE DATE(p.tgl_jual) BETWEEN :start_date AND :end_date
     
     UNION ALL
     
     SELECT 
         'Purchase' as transaction_type,
-        pm.tanggal_pembelian as transaction_date,
+        pm.tgl_beli as transaction_date,
         b.nama_barang as item_name,
-        pm.jumlah as quantity,
-        b.satuan as unit,
-        pm.harga_satuan as unit_price,
+        pm.qty as quantity,
+        'pcs' as unit,
+        pm.harga as unit_price,
         pm.total_pembelian as total_amount,
         'Cash Outflow' as cash_flow_type,
-        u.nama as user_name,
+        'System User' as user_name,
         s.nama_supplier as supplier_name,
-        pm.keterangan as notes
+        CONCAT('Purchase of ', b.nama_barang) as notes
     FROM pembelian pm
-    JOIN barang b ON pm.id_barang = b.id_barang
+    JOIN barang b ON pm.kode_barang = b.kode_barang
     JOIN supplier s ON pm.id_supplier = s.id_supplier
-    JOIN pengguna u ON pm.id_pengguna = u.id_pengguna
-    WHERE DATE(pm.tanggal_pembelian) BETWEEN :start_date AND :end_date
+    WHERE DATE(pm.tgl_beli) BETWEEN :start_date AND :end_date
     
     ORDER BY transaction_date DESC
 ";
@@ -59,13 +75,13 @@ $query = "
     FROM (
         SELECT 'Sale' as transaction_type, total_penjualan as total_amount
         FROM penjualan 
-        WHERE DATE(tanggal_penjualan) BETWEEN :start_date AND :end_date
+        WHERE DATE(tgl_jual) BETWEEN :start_date AND :end_date
         
         UNION ALL
         
         SELECT 'Purchase' as transaction_type, total_pembelian as total_amount
         FROM pembelian 
-        WHERE DATE(tanggal_pembelian) BETWEEN :start_date AND :end_date
+        WHERE DATE(tgl_beli) BETWEEN :start_date AND :end_date
     ) as combined_transactions
 ";
 
@@ -74,6 +90,9 @@ $stmt->bindParam(':start_date', $start_date);
 $stmt->bindParam(':end_date', $end_date);
 $stmt->execute();
 $journal_summary = $stmt->fetch(PDO::FETCH_ASSOC);
+
+require_once dirname(__DIR__, 2) . '/components/header.php';
+
 ?>
 
 <div class="px-6 py-4 border-b border-gray-200">
@@ -116,7 +135,7 @@ $journal_summary = $stmt->fetch(PDO::FETCH_ASSOC);
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Party</th>
@@ -138,7 +157,7 @@ $journal_summary = $stmt->fetch(PDO::FETCH_ASSOC);
                     <?php foreach ($journal_entries as $entry): ?>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                <?php echo formatDateTime($entry['transaction_date']); ?>
+                                <?php echo date('d/m/Y', strtotime($entry['transaction_date'])); ?>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?php echo $entry['transaction_type'] === 'Sale' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'; ?>">
@@ -194,4 +213,3 @@ $journal_summary = $stmt->fetch(PDO::FETCH_ASSOC);
         </table>
     </div>
 </div>
-
