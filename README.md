@@ -24,7 +24,6 @@
 - 📈 **Laporan Lengkap** - Akses semua laporan bisnis
   - Jurnal Umum
   - Laporan Kas Masuk/Keluar per Periode
-  - Laporan Inventory
   - Dan masih banyak lagi
 
 ## 🛠️ Teknologi
@@ -46,17 +45,17 @@ git clone https://github.com/maulana-tech/panuntun_market.git
 # 2. Pindah ke direktori XAMPP
 mv panuntun_market /Applications/XAMPP/xamppfiles/htdocs/
 
-# 3. Start XAMPP services
-# Buka XAMPP Control Panel dan start Apache + MySQL
-
-# 4. Setup database
-# Buka http://localhost/phpmyadmin
-# Buat database: db_minimarket_panuntun
-# Import file: db.sql
-
-# 5. Akses aplikasi
-# http://localhost/panuntun_market/
 ```
+3. Start XAMPP services
+- Buka XAMPP Control Panel dan start Apache + MySQL
+
+4. Setup database
+- Buka http://localhost/phpmyadmin
+- Buat database: db_minimarket_panuntun
+- Import file: db.sql
+
+5. Akses aplikasi
+- http://localhost/panuntun_market/
 
 ## 📦 Instalasi Lengkap
 
@@ -73,11 +72,11 @@ mv panuntun_market /Applications/XAMPP/xamppfiles/htdocs/
 # Clone repository
 git clone https://github.com/maulana-tech/panuntun_market.git
 
-# Pindahkan ke direktori server
-# Windows: C:\xampp\htdocs\panuntun_market\
-# macOS: /Applications/XAMPP/xamppfiles/htdocs/panuntun_market/
-# Linux: /opt/lampp/htdocs/panuntun_market/
 ```
+
+1. Pindahkan ke direktori server
+- Windows: C:\xampp\htdocs\panuntun_market\
+
 
 #### 2️⃣ Database Setup
 1. **Start XAMPP** - Jalankan Apache dan MySQL
@@ -182,11 +181,3 @@ Solusi:
 - **XAMPP**: Klik "Stop" untuk Apache dan MySQL
 - **Command Line**: `Ctrl+C` jika menggunakan built-in server
 
-
-<div align="center">
-
-**🎉 Happy Coding! 🎉**
-
-Dibuat dengan ❤️ untuk Minimarket Panuntun
-
-</div>
