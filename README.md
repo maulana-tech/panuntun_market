@@ -36,16 +36,7 @@
 | **Frontend** | HTML, CSS, JavaScript |
 | **Platform** | Cross-platform (Windows, macOS, Linux) |
 
-## 🚀 Quick Start
 
-```bash
-# 1. Clone repository
-git clone https://github.com/maulana-tech/panuntun_market.git
-
-# 2. Pindah ke direktori XAMPP
-mv panuntun_market /Applications/XAMPP/xamppfiles/htdocs/
-
-```
 3. Start XAMPP services
 - Buka XAMPP Control Panel dan start Apache + MySQL
 
