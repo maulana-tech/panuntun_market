@@ -96,27 +96,27 @@ require_once dirname(__DIR__, 2) . '/components/header.php';
 ?>
 
 <div class="px-6 py-4 border-b border-gray-200">
-    <h3 class="text-lg font-medium text-gray-900">Journal Report</h3>
-    <p class="text-sm text-gray-600">Complete transaction history for period: <?php echo date('d/m/Y', strtotime($start_date)); ?> - <?php echo date('d/m/Y', strtotime($end_date)); ?></p>
+    <h3 class="text-lg font-medium text-gray-900">Laporan Jurnal</h3>
+    <p class="text-sm text-gray-600">Riwayat transaksi lengkap untuk periode: <?php echo date('d/m/Y', strtotime($start_date)); ?> - <?php echo date('d/m/Y', strtotime($end_date)); ?></p>
 </div>
 
 <div class="p-6">
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-green-800">Total Sales</div>
+            <div class="text-sm font-medium text-green-800">Total Penjualan</div>
             <div class="text-xl font-bold text-green-600"><?php echo $journal_summary['total_sales'] ?? 0; ?></div>
             <div class="text-sm text-green-600"><?php echo formatCurrency($journal_summary['total_sales_amount'] ?? 0); ?></div>
         </div>
         
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-red-800">Total Purchases</div>
+            <div class="text-sm font-medium text-red-800">Total Pembelian</div>
             <div class="text-xl font-bold text-red-600"><?php echo $journal_summary['total_purchases'] ?? 0; ?></div>
             <div class="text-sm text-red-600"><?php echo formatCurrency($journal_summary['total_purchases_amount'] ?? 0); ?></div>
         </div>
         
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-blue-800">Total Transactions</div>
+            <div class="text-sm font-medium text-blue-800">Total Transaksi</div>
             <div class="text-xl font-bold text-blue-600"><?php echo ($journal_summary['total_sales'] ?? 0) + ($journal_summary['total_purchases'] ?? 0); ?></div>
         </div>
         
@@ -135,15 +135,15 @@ require_once dirname(__DIR__, 2) . '/components/header.php';
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Party</th>
-                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Price</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cash Flow</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pihak</th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Kuantitas</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Satuan</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arus Kas</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pengguna</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -195,7 +195,7 @@ require_once dirname(__DIR__, 2) . '/components/header.php';
                     
                     <!-- Summary Row -->
                     <tr class="bg-gray-50 font-bold">
-                        <td colspan="6" class="px-6 py-4 text-sm text-gray-900">PERIOD TOTALS</td>
+                        <td colspan="6" class="px-6 py-4 text-sm text-gray-900">TOTAL PERIODE</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
                             <div class="text-green-600">+<?php echo formatCurrency($journal_summary['total_sales_amount'] ?? 0); ?></div>
                             <div class="text-red-600">-<?php echo formatCurrency($journal_summary['total_purchases_amount'] ?? 0); ?></div>
@@ -204,8 +204,8 @@ require_once dirname(__DIR__, 2) . '/components/header.php';
                             </div>
                         </td>
                         <td colspan="2" class="px-6 py-4 text-sm text-gray-500">
-                            Sales: <?php echo $journal_summary['total_sales'] ?? 0; ?> | 
-                            Purchases: <?php echo $journal_summary['total_purchases'] ?? 0; ?>
+                            Penjualan: <?php echo $journal_summary['total_sales'] ?? 0; ?> | 
+                            Pembelian: <?php echo $journal_summary['total_purchases'] ?? 0; ?>
                         </td>
                     </tr>
                 <?php endif; ?>

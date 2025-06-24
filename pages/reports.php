@@ -24,8 +24,6 @@ $report_types = [
     'cash_inflow'       => 'Laporan Kas Masuk (Penjualan)',
     'cash_outflow'      => 'Laporan Kas Keluar (Pembelian)',
     'journal'           => 'Jurnal Umum Transaksi',
-    'inventory'         => 'Laporan Inventaris',
-    'suppliers'         => 'Laporan Pemasok (Supplier)',
     'users'             => 'Laporan Pengguna'
 ];
 

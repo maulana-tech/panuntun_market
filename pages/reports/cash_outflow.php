@@ -97,35 +97,35 @@ $query = "SELECT
 ?>
 
 <div class="px-6 py-4 border-b border-gray-200">
-    <h3 class="text-lg font-medium text-gray-900">Cash Outflow Report</h3>
-    <p class="text-sm text-gray-600">Period: <?php echo date('d/m/Y', strtotime($start_date)); ?> - <?php echo date('d/m/Y', strtotime($end_date)); ?></p>
+    <h3 class="text-lg font-medium text-gray-900">Laporan Kas Keluar</h3>
+    <p class="text-sm text-gray-600">Periode: <?php echo date('d/m/Y', strtotime($start_date)); ?> - <?php echo date('d/m/Y', strtotime($end_date)); ?></p>
 </div>
 
 <div class="p-6">
     <!-- Summary Statistics -->
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-red-800">Total Transactions</div>
+            <div class="text-sm font-medium text-red-800">Total Transaksi</div>
             <div class="text-xl font-bold text-red-600"><?php echo $summary_stats['total_transactions'] ?? 0; ?></div>
         </div>
         
         <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-red-800">Total Amount</div>
+            <div class="text-sm font-medium text-red-800">Total Jumlah</div>
             <div class="text-xl font-bold text-red-600"><?php echo formatCurrency($summary_stats['total_amount'] ?? 0); ?></div>
         </div>
         
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-blue-800">Average Amount</div>
+            <div class="text-sm font-medium text-blue-800">Rata-rata Jumlah</div>
             <div class="text-xl font-bold text-blue-600"><?php echo formatCurrency($summary_stats['average_amount'] ?? 0); ?></div>
         </div>
         
         <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-purple-800">Largest Purchase</div>
+            <div class="text-sm font-medium text-purple-800">Pembelian Terbesar</div>
             <div class="text-xl font-bold text-purple-600"><?php echo formatCurrency($summary_stats['max_amount'] ?? 0); ?></div>
         </div>
         
         <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center">
-            <div class="text-sm font-medium text-gray-800">Smallest Purchase</div>
+            <div class="text-sm font-medium text-gray-800">Pembelian Terkecil</div>
             <div class="text-xl font-bold text-gray-600"><?php echo formatCurrency($summary_stats['min_amount'] ?? 0); ?></div>
         </div>
     </div>
@@ -139,9 +139,9 @@ $query = "SELECT
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Transactions</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Percentage</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Transaksi</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Jumlah</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Persentase</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -174,14 +174,14 @@ $query = "SELECT
     <!-- Daily Totals -->
     <?php if (!empty($daily_totals)): ?>
         <div class="mb-8">
-            <h4 class="text-lg font-medium text-gray-900 mb-4">Daily Summary</h4>
+            <h4 class="text-lg font-medium text-gray-900 mb-4">Ringkasan Harian</h4>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Transactions</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Transaksi</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Jumlah</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -206,18 +206,18 @@ $query = "SELECT
 
     <!-- Detailed Transactions -->
     <div>
-        <h4 class="text-lg font-medium text-gray-900 mb-4">Detailed Transactions</h4>
+        <h4 class="text-lg font-medium text-gray-900 mb-4">Rincian Transaksi</h4>
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
-                        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Price</th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Processed By</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal & Waktu</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produk</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pemasok</th>
+                        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Kuantitas</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Satuan</th>
+                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Jumlah</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Diproses Oleh</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">

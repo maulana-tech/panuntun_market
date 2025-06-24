@@ -1,9 +1,7 @@
 <?php
 error_reporting(E_ALL); ini_set('display_errors', 1);
-require_once __DIR__ . 
-'/../includes/functions.php';
-require_once __DIR__ . 
-'/../vendor/fpdf/fpdf.php';
+    require_once dirname(__DIR__, 2) . '/includes/functions.php';
+    require_once dirname(__DIR__,2) . '/vendor/setasign/fpdf/fpdf.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -69,7 +67,6 @@ if (file_exists($report_file)) {
     $reportContent = ob_get_clean();
 
     // Convert HTML content to PDF (basic conversion, might need more advanced library for complex HTML)
-    // For simplicity, we'll just add the text content. For full HTML rendering, a library like TCPDF or Dompdf is better.
     $pdf->MultiCell(0, 5, strip_tags($reportContent));
 
 } else {
