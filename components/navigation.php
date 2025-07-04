@@ -110,21 +110,23 @@ $navigation = [
 ];
 ?>
 
-<ul role="list" class="-mx-2 space-y-1" x-data="{ openSubmenu: null }">
+<nav class="nav-container" x-data="{ openSubmenu: null }">
+<ul role="list" class="space-y-0.5">
     <?php foreach ($navigation as $index => $item): ?>
         <?php if (isset($item['children'])): ?>
             <!-- Submenu item -->
-            <li>
+            <li class="nav-item <?php echo $item['current'] ? 'active' : ''; ?>" x-data="{ isHovered: false }" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
                 <button type="button" 
-                        class="<?php echo $item['current'] ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'; ?> group flex w-full items-center gap-x-3 rounded-md p-2 text-left text-sm leading-6 font-semibold"
+                        class="nav-button <?php echo $item['current'] ? 'active' : ''; ?>"
                         @click="openSubmenu = openSubmenu === <?php echo $index; ?> ? null : <?php echo $index; ?>">
-                    <svg class="<?php echo $item['current'] ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-600'; ?> h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <svg class="nav-icon" :class="{ 'text-indigo-600': isHovered || <?php echo $item['current'] ? 'true' : 'false'; ?> }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo $item['icon']; ?>" />
                     </svg>
-                    <?php echo $item['name']; ?>
-                    <svg class="ml-auto h-5 w-5 shrink-0 text-gray-400 transition-transform duration-200" 
-                         :class="{ 'rotate-90': openSubmenu === <?php echo $index; ?> }"
-                         viewBox="0 0 20 20" fill="currentColor">
+                    <span class="nav-text"><?php echo $item['name']; ?></span>
+                    <svg class="submenu-indicator" 
+                         :class="{ 'open': openSubmenu === <?php echo $index; ?>, 'text-indigo-600': isHovered || <?php echo $item['current'] ? 'true' : 'false'; ?> }"
+                         viewBox="0 0 20 20" fill="currentColor"
+                         :class="{ 'text-indigo-600': isHovered || <?php echo $item['current'] ? 'true' : 'false'; ?> }">
                         <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
                     </svg>
                 </button>
@@ -135,12 +137,12 @@ $navigation = [
                     x-transition:leave="transition ease-in duration-75"
                     x-transition:leave-start="transform opacity-100 scale-100"
                     x-transition:leave-end="transform opacity-0 scale-95"
-                    class="mt-1 px-2">
+                    class="submenu" style="display: none" x-show="openSubmenu === <?php echo $index; ?>">
                     <?php foreach ($item['children'] as $child): ?>
                         <?php if (!isset($child['admin_only']) || ($child['admin_only'] && $isAdmin)): ?>
-                            <li>
+                            <li class="submenu-item">
                                 <a href="<?php echo $child['href']; ?>" 
-                                   class="<?php echo $child['current'] ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'; ?> block rounded-md py-2 pl-9 pr-2 text-sm leading-6">
+                                   class="submenu-link <?php echo $child['current'] ? 'active' : ''; ?>">
                                     <?php echo $child['name']; ?>
                                 </a>
                             </li>
@@ -150,10 +152,10 @@ $navigation = [
             </li>
         <?php else: ?>
             <!-- Single item -->
-            <li>
+            <li class="nav-item <?php echo $item['current'] ? 'active' : ''; ?>" x-data="{ isHovered: false }" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
                 <a href="<?php echo $item['href']; ?>" 
-                   class="<?php echo $item['current'] ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50'; ?> group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                    <svg class="<?php echo $item['current'] ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-600'; ?> h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                   class="nav-button <?php echo $item['current'] ? 'active' : ''; ?>">
+                    <svg class="nav-icon" :class="{ 'text-indigo-600': isHovered || <?php echo $item['current'] ? 'true' : 'false'; ?> }" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo $item['icon']; ?>" />
                     </svg>
                     <?php echo $item['name']; ?>
@@ -162,6 +164,7 @@ $navigation = [
         <?php endif; ?>
     <?php endforeach; ?>
 </ul>
+</nav>
 
 <!-- Debug info (hapus setelah testing) -->
 <!-- 

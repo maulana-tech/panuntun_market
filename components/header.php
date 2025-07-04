@@ -8,30 +8,6 @@
     <!-- TailwindCSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Custom TailwindCSS Configuration -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
     <!-- Alpine.js for interactive components -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
@@ -39,48 +15,15 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Custom CSS -->
-    <style>
-        .sidebar-transition {
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hover-scale {
-            transition: transform 0.2s ease-in-out;
-        }
-        
-        .hover-scale:hover {
-            transform: scale(1.02);
-        }
-        
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .card-shadow:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            
-            .print-full-width {
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/header.css">
+    <link rel="stylesheet" href="../assets/css/navigation.css">
+    
+    <!-- Custom JavaScript -->
+    <script src="../assets/js/ui-enhancements.js" defer></script>
+    <script src="../assets/js/main.js" defer></script>
+
 </head>
 <body class="h-full">
     <div x-data="{ sidebarOpen: false }" class="min-h-full">
@@ -110,9 +53,6 @@
                                 // Determine correct path for navigation.php based on actual directory structure
                                 $navPath = '';
                                 $currentScript = $_SERVER['PHP_SELF'];
-                                
-                                // Since header.php is in components/ and navigation.php is also in components/
-                                // We need to find the correct relative path
                                 if (basename(__FILE__) === 'header.php') {
                                     // header.php is in components/, so navigation.php is in same directory
                                     $navPath = dirname(__FILE__) . '/navigation.php';
@@ -167,7 +107,7 @@
             <!-- Main content area -->
             <div class="lg:pl-72">
                 <!-- Top navigation -->
-                <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 no-print">
+                <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 px-4 shadow-md sm:gap-x-6 sm:px-6 lg:px-8 no-print modern-header">
                     <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden" @click="sidebarOpen = true">
                         <span class="sr-only">Open sidebar</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -186,7 +126,7 @@
                             <div class="relative" x-data="{ open: false }">
                                 <button type="button" class="flex items-center gap-x-2 text-sm font-semibold leading-6 text-gray-900" @click="open = !open">
                                     <span class="sr-only">Open user menu</span>
-                                    <div class="h-8 w-8 rounded-full bg-primary-500 flex items-center justify-center">
+                                    <div class="h-8 w-8 rounded-full flex items-center justify-center user-profile">
                                         <span class="text-sm font-medium text-white"><?php echo strtoupper(substr(getCurrentUser()['nama'], 0, 1)); ?></span>
                                     </div>
                                     <span class="hidden lg:flex lg:items-center">
@@ -197,7 +137,7 @@
                                     </span>
                                 </button>
                                 
-                                <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5">
+                                <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right user-menu py-2">
                                 <?php 
                                     // Determine logout path
                                     $logoutPath = '';
