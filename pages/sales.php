@@ -92,7 +92,7 @@ include dirname(__DIR__) . '/components/header.php';
                 <h1 class="text-2xl font-bold text-gray-900">Sales Transactions</h1>
                 <p class="mt-1 text-sm text-gray-600">Record sales and manage transactions</p>
             </div>
-            <button onclick="openSaleModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+            <button onclick="openSaleModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
@@ -123,7 +123,7 @@ include dirname(__DIR__) . '/components/header.php';
     <?php endif; ?>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
+        <div class="bg-white border-l-4 border-blue-500 overflow-hidden shadow-sm rounded-lg card-shadow">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -138,7 +138,7 @@ include dirname(__DIR__) . '/components/header.php';
                 </div>
             </div>
         </div>
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
+        <div class="bg-white border-l-4 border-blue-500 overflow-hidden shadow-sm rounded-lg card-shadow">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -153,7 +153,7 @@ include dirname(__DIR__) . '/components/header.php';
                 </div>
             </div>
         </div>
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
+        <div class="bg-white border-l-4 border-blue-500 overflow-hidden shadow-sm rounded-lg card-shadow">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -170,52 +170,61 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
     </div>
 
-    <div class="bg-white shadow-sm rounded-lg card-shadow overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">Recent Sales</h3>
+    <div class="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden card-shadow">
+        <div class="px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Riwayat Penjualan Terkini</h3>
+                <p class="text-sm text-gray-500">10 transaksi penjualan terakhir yang tercatat.</p>
+            </div>
+            <a href="reports.php?report_type=cash_inflow" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                Lihat Laporan &rarr;
+            </a>
         </div>
-        <div class="overflow-x-auto">
-            <table class="modern-table min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Price</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php if (empty($recent_sales)): ?>
-                        <tr>
-                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
-                                <p class="mt-2 text-sm text-gray-500">No sales recorded yet</p>
-                            </td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($recent_sales as $sale): ?>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($sale['nama_barang']); ?></div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <?php echo $sale['qty']; ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                    <?php echo formatCurrency($sale['harga']); ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
-                                    <?php echo formatCurrency($sale['total_penjualan']); ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                     <?php echo formatDate($sale['tgl_jual']); ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+
+        <div class="flow-root">
+            <ul role="list" class="divide-y divide-gray-200">
+                <?php if (empty($recent_sales)): ?>
+                    <li class="px-6 py-16 text-center">
+                        <div class="flex flex-col items-center">
+                            <svg class="h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 00-1.883 2.542l.857 6a2.25 2.25 0 002.227 1.932H19.05l.857-6a2.25 2.25 0 00-2.227-1.932m-16.5 0A2.25 2.25 0 015.625 7.5h12.75a2.25 2.25 0 012.25 2.276m-16.5 0v12c0 .621.504 1.125 1.125 1.125h14.25c.621 0 1.125-.504 1.125-1.125v-12" />
+                            </svg>
+                            <h3 class="text-lg font-semibold text-gray-800">Belum ada penjualan</h3>
+                            <p class="mt-1 text-sm text-gray-500">Setiap transaksi penjualan yang Anda catat akan muncul di sini.</p>
+                        </div>
+                    </li>
+                <?php else: ?>
+                    <?php foreach ($recent_sales as $sale): ?>
+                        <li class="p-4 hover:bg-gray-50/50 transition-colors duration-200">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0">
+                                    <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75-.75v-.75m0 0l-1.125-1.5a1.125 1.125 0 010-1.5l1.125-1.5m-16.5 4.5L12 12m0 0l4.5 4.5m-4.5-4.5L7.5 7.5m4.5 4.5l-4.5 4.5M3 12h18" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-gray-800 truncate"><?php echo htmlspecialchars($sale['nama_barang']); ?></p>
+                                    <p class="text-sm text-gray-500">
+                                        <span><?php echo $sale['qty']; ?> pcs</span>
+                                        <span class="mx-1">&middot;</span>
+                                        <span><?php echo formatCurrency($sale['harga']); ?></span>
+                                    </p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap">
+                                    <p class="font-bold text-green-600">
+                                        <?php echo formatCurrency($sale['total_penjualan']); ?>
+                                    </p>
+                                    <p class="text-gray-500">
+                                        <?php echo formatDate($sale['tgl_jual']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
         </div>
     </div>
 </div>
@@ -270,7 +279,7 @@ include dirname(__DIR__) . '/components/header.php';
                     <button type="button" onclick="closeSaleModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                         Cancel
                     </button>
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                         Record Sale
                     </button>
                 </div>
