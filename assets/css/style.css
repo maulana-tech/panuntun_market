@@ -1,0 +1,98 @@
+/* Custom Global Styles */
+body {
+    font-family: 'Inter', sans-serif; /* Example: Using a modern sans-serif font */
+}
+
+/* Re-locate existing custom styles from header.php */
+.sidebar-transition {
+    transition: transform 0.3s ease-in-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced Card Styling */
+.card {
+    @apply bg-white overflow-hidden shadow-lg rounded-xl;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    @apply transform scale-[1.03] shadow-xl;
+}
+
+.card-header {
+    @apply px-6 py-4 border-b border-gray-200;
+}
+
+.card-title {
+    @apply text-lg font-semibold text-gray-800;
+}
+
+.card-body {
+    @apply p-6;
+}
+
+.card-footer {
+    @apply px-6 py-4 bg-gray-50 border-t border-gray-200 rounded-b-xl;
+}
+
+/* Specific Card Variants */
+.stats-card .icon-bg {
+    @apply w-12 h-12 rounded-lg flex items-center justify-center;
+}
+
+.stats-card .icon-svg {
+    @apply w-6 h-6;
+}
+
+.quick-action-card {
+    @apply rounded-lg p-6 text-white transition-all duration-300 transform;
+    background-blend-mode: overlay; /* For potentially blending with background images later */
+}
+
+.quick-action-card:hover {
+    @apply scale-105 shadow-lg;
+}
+
+.quick-action-card .icon-wrapper {
+    @apply rounded-lg inline-flex p-3 bg-white bg-opacity-25;
+}
+
+.quick-action-card .icon-svg {
+    @apply h-7 w-7 text-white;
+}
+
+/* Print styles - keep as is for now */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .print-full-width {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* Add Tailwind Directives if not already handled by CDN/build process */
+/* This might be needed if we were using a local Tailwind setup with a build step */
+/* For CDN, Tailwind processes classes in HTML directly. */
+/* However, using @apply here allows for component-like class definitions. */
+/* Ensure your setup supports @apply if this file is processed by Tailwind CLI. */
+/* If using only CDN and this file is linked as plain CSS, @apply won't work. */
+/* For this context, assuming @apply will be processed or we'll use utility classes directly in HTML. */
+/* For simplicity with CDN, it's often better to compose utilities in HTML or use JS to add classes. */
+/* Let's assume for now these are conceptual and will translate to direct Tailwind classes in PHP files or a build step exists. */
+
+/* Placeholder for Inter font - if not available via a CDN or local files, Tailwind will use its default sans-serif stack. */
+/* To actually use Inter, it needs to be imported, e.g., via Google Fonts in header.php */
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); */
+/* This import should ideally be in the main HTML head (header.php) */

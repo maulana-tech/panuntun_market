@@ -37,50 +37,52 @@
     
     <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <style>
-        .sidebar-transition {
-            transition: transform 0.3s ease-in-out;
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
+
+    <script>
+        // Extend Tailwind theme to include Inter font
+        // This ensures Tailwind's font utilities (font-sans, etc.) use Inter
+        if (typeof tailwind !== 'undefined' && tailwind.config && tailwind.config.theme && tailwind.config.theme.extend) {
+            tailwind.config.theme.extend.fontFamily = {
+                sans: ['Inter', ...tailwind.config.theme.fontFamily.sans || ['sans-serif']],
+            };
+        } else {
+            // Fallback or initial config if tailwind.config is not structured as expected
+            tailwind.config = {
+                ...tailwind.config, // Spread existing config if any
+                theme: {
+                    ...(tailwind.config && tailwind.config.theme), // Spread existing theme if any
+                    extend: {
+                        ...(tailwind.config && tailwind.config.theme && tailwind.config.theme.extend), // Spread existing extend if any
+                        colors: {
+                            primary: {
+                                50: '#eff6ff',
+                                100: '#dbeafe',
+                                200: '#bfdbfe',
+                                300: '#93c5fd',
+                                400: '#60a5fa',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8',
+                                800: '#1e40af',
+                                900: '#1e3a8a',
+                            }
+                        },
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'], // Ensure Inter is primary sans-serif
+                        },
+                    }
+                }
+            };
         }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .hover-scale {
-            transition: transform 0.2s ease-in-out;
-        }
-        
-        .hover-scale:hover {
-            transform: scale(1.02);
-        }
-        
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        
-        .card-shadow:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            
-            .print-full-width {
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-        }
-    </style>
+    </script>
 </head>
 <body class="h-full">
     <div x-data="{ sidebarOpen: false }" class="min-h-full">
