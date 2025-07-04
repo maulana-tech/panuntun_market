@@ -1,0 +1,212 @@
+/* Modern Navigation Styles */
+:root {
+    --nav-primary: #4F46E5;
+    --nav-primary-light: #6366F1;
+    --nav-hover-bg: rgba(99, 102, 241, 0.04);
+    --nav-active-bg: rgba(79, 70, 229, 0.1);
+    --nav-text: #4B5563;
+    --nav-text-light: #6B7280;
+}
+
+.nav-container {
+    padding: 0.5rem;
+}
+
+/* Main menu items */
+.nav-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    position: relative;
+    margin: 0.125rem 0;
+    transition: all 0.2s ease;
+}
+
+.nav-item:hover .nav-button {
+    background: var(--nav-hover-bg);
+    color: var(--nav-primary);
+}
+
+.nav-item.active .nav-button {
+    background: var(--nav-active-bg);
+    color: var(--nav-primary);
+    font-weight: 600;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: var(--nav-primary);
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-item:hover::before {
+    transform: translateY(-50%) scaleY(0.6);
+    opacity: 0.5;
+}
+
+.nav-item.active::before {
+    transform: translateY(-50%) scaleY(1);
+    opacity: 1;
+}
+
+.nav-button {
+    width: 100%;
+    padding: 0.625rem 0.75rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--nav-text);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.nav-button:hover {
+    color: var(--nav-primary-light);
+}
+
+.nav-button.active {
+    color: var(--nav-primary);
+    background: var(--nav-active-bg);
+}
+
+/* Icons */
+.nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    opacity: 0.75;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    color: var(--nav-text-light);
+}
+
+.nav-button:hover .nav-icon {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.nav-button.active .nav-icon {
+    opacity: 1;
+    color: #4F46E5;
+}
+
+/* Submenu */
+.nav-text {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.submenu {
+    margin: 0.125rem 0 0.125rem 2.25rem;
+    border-left: 1px solid rgba(99, 102, 241, 0.2);
+    padding: 0.25rem 0;
+}
+
+.submenu-item {
+    position: relative;
+    margin-bottom: 0.25rem;
+}
+
+.submenu-link {
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    color: var(--nav-text-light);
+    font-size: 0.813rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    margin-left: -1px;
+    position: relative;
+}
+
+.submenu-link:hover {
+    color: var(--nav-primary);
+    background: var(--nav-hover-bg);
+}
+
+.submenu-link.active {
+    color: var(--nav-primary);
+    background: var(--nav-active-bg);
+    font-weight: 500;
+}
+
+/* Submenu indicator */
+.submenu-indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.submenu-indicator.open {
+    transform: rotate(90deg);
+}
+
+/* Animation for submenu */
+.submenu {
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* Hover effects */
+.nav-item:hover .nav-icon,
+.submenu-link:hover .submenu-icon {
+    transform: translateX(2px);
+}
+
+/* Active state visual indicator */
+.nav-item.active::before,
+.submenu-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: #4F46E5;
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.nav-item.active::before,
+.submenu-link.active::before {
+    opacity: 1;
+}
+
+/* Custom scrollbar for navigation */
+.nav-container::-webkit-scrollbar {
+    width: 4px;
+}
+
+.nav-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.nav-container::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 4px;
+}
+
+.nav-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.4);
+}
