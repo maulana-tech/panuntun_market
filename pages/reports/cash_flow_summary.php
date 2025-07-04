@@ -55,7 +55,7 @@ $current_balance = $stmt_balance->fetchColumn();
         <div class="bg-purple-50 border border-purple-200 rounded-lg p-4"><div class="text-sm font-medium text-purple-800">Saldo Kas Terkini</div><div class="text-2xl font-bold text-purple-600"><?php echo formatCurrency($current_balance ? $current_balance : 0); ?></div></div>
     </div>
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="modern-table min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>

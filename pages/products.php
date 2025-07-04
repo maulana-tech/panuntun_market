@@ -118,7 +118,7 @@ include dirname(__DIR__) . '/components/header.php';
                 <h1 class="text-2xl font-bold text-gray-900">Product Management</h1>
                 <p class="mt-1 text-sm text-gray-600">Manage inventory and product information</p>
             </div>
-            <button onclick="openAddModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
+            <button onclick="openAddModal()" class="enhanced-button inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
@@ -163,7 +163,7 @@ include dirname(__DIR__) . '/components/header.php';
     </div>
 
     <div class="bg-white shadow-sm rounded-lg overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-200">
+        <table class="modern-table min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>

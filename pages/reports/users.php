@@ -155,7 +155,7 @@ $user_performance = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="mb-8">
         <h4 class="text-lg font-medium text-gray-900 mb-4">User Details & Performance</h4>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="modern-table min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Information</th>
@@ -224,7 +224,7 @@ $user_performance = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="mb-8">
             <h4 class="text-lg font-medium text-gray-900 mb-4">Monthly User Performance (Last 6 Months)</h4>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="modern-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
@@ -269,7 +269,7 @@ $user_performance = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div>
             <h4 class="text-lg font-medium text-gray-900 mb-4">Recent User Activities (Last 30 Days)</h4>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="modern-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>

@@ -92,7 +92,7 @@ include dirname(__DIR__) . '/components/header.php';
     <!-- Stats overview -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
         <!-- Cash Balance -->
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow hover-scale">
+        <div class="modern-card">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -113,7 +113,7 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
 
         <!-- Today's Inflow -->
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow hover-scale">
+        <div class="modern-card">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -134,7 +134,7 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
 
         <!-- Today's Outflow -->
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow hover-scale">
+        <div class="modern-card">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
@@ -155,7 +155,7 @@ include dirname(__DIR__) . '/components/header.php';
         </div>
 
         <!-- Total Products -->
-        <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow hover-scale">
+        <div class="modern-card">
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">

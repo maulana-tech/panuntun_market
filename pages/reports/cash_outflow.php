@@ -135,7 +135,7 @@ $query = "SELECT
         <div class="mb-8">
             <h4 class="text-lg font-medium text-gray-900 mb-4">Supplier Breakdown</h4>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="modern-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
@@ -176,7 +176,7 @@ $query = "SELECT
         <div class="mb-8">
             <h4 class="text-lg font-medium text-gray-900 mb-4">Ringkasan Harian</h4>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
+                <table class="modern-table min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
@@ -208,7 +208,7 @@ $query = "SELECT
     <div>
         <h4 class="text-lg font-medium text-gray-900 mb-4">Rincian Transaksi</h4>
         <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+            <table class="modern-table min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal & Waktu</th>
