@@ -91,84 +91,80 @@ include dirname(__DIR__) . '/components/header.php';
 <div class="fade-in">
     <!-- Stats overview -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        <!-- Cash Balance -->
-        <div class="modern-card">
-            <div class="p-6">
+        <div class="modern-card bg-blue-50 border-l-4 border-blue-500">
+            <div class="p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center">
-                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                             </svg>
                         </div>
                     </div>
                     <div class="ml-4 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Cash Balance</dt>
-                            <dd class="text-lg font-semibold text-gray-900"><?php echo formatCurrency($stats['cash_balance']); ?></dd>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Saldo Kas</dt>
+                            <dd class="text-xl font-semibold text-gray-900"><?php echo formatCurrency($stats['cash_balance']); ?></dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Today's Inflow -->
-        <div class="modern-card">
-            <div class="p-6">
+        <div class="modern-card bg-green-50 border-l-4 border-green-500">
+            <div class="p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
-                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
                             </svg>
                         </div>
                     </div>
                     <div class="ml-4 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Today's Inflow</dt>
-                            <dd class="text-lg font-semibold text-gray-900"><?php echo formatCurrency($stats['today_inflow']); ?></dd>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Pemasukan Hari Ini</dt>
+                            <dd class="text-xl font-semibold text-gray-900"><?php echo formatCurrency($stats['today_inflow']); ?></dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Today's Outflow -->
-        <div class="modern-card">
-            <div class="p-6">
+        <div class="modern-card bg-amber-50 border-l-4 border-amber-500">
+            <div class="p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-red-100 rounded-md flex items-center justify-center">
-                            <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
                             </svg>
                         </div>
                     </div>
                     <div class="ml-4 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Today's Outflow</dt>
-                            <dd class="text-lg font-semibold text-gray-900"><?php echo formatCurrency($stats['today_outflow']); ?></dd>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Pengeluaran Hari Ini</dt>
+                            <dd class="text-xl font-semibold text-gray-900"><?php echo formatCurrency($stats['today_outflow']); ?></dd>
                         </dl>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Total Products -->
-        <div class="modern-card">
-            <div class="p-6">
+        <div class="modern-card bg-purple-50 border-l-4 border-purple-500">
+            <div class="p-4">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 bg-purple-100 rounded-md flex items-center justify-center">
-                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                             </svg>
                         </div>
                     </div>
                     <div class="ml-4 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Products</dt>
-                            <dd class="text-lg font-semibold text-gray-900"><?php echo number_format($stats['total_products']); ?></dd>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total Produk</dt>
+                            <dd class="text-xl font-semibold text-gray-900"><?php echo number_format($stats['total_products']); ?></dd>
                         </dl>
                     </div>
                 </div>
@@ -177,82 +173,112 @@ include dirname(__DIR__) . '/components/header.php';
     </div>
 
     <!-- Charts and Recent Activity -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <!-- Cash Flow Chart -->
-        <div class="bg-white shadow-sm rounded-lg card-shadow">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Cash Flow Trend (6 Months)</h3>
-            </div>
-            <div class="p-6">
-                <canvas id="cashFlowChart" width="400" height="200"></canvas>
-            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
+    
+    <div class="lg:col-span-3 bg-white rounded-xl shadow-lg overflow-hidden card-shadow">
+        <div class="p-6 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800">Tren Arus Kas</h3>
+            <p class="text-sm text-gray-500">Ringkasan pemasukan dan pengeluaran dalam 6 bulan terakhir.</p>
         </div>
-
-        <!-- Recent Transactions -->
-        <div class="bg-white shadow-sm rounded-lg card-shadow">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h3 class="text-lg font-medium text-gray-900">Recent Transactions</h3>
-            </div>
-            <div class="divide-y divide-gray-200">
-                <?php if (empty($recent_transactions)): ?>
-                    <div class="p-6 text-center text-gray-500">
-                        No recent transactions found.
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($recent_transactions as $transaction): ?>
-                        <div class="p-4 hover:bg-gray-50">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <div class="flex-shrink-0">
-                                        <?php if ($transaction['type'] === 'sale'): ?>
-                                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-                                                </svg>
-                                            </div>
-                                        <?php else: ?>
-                                            <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-                                                <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"></path>
-                                                </svg>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-900"><?php echo $transaction['description']; ?></p>
-                                        <p class="text-sm text-gray-500"><?php echo formatDate($transaction['tanggal']); ?></p>
-                                    </div>
-                                </div>
-                                <div class="text-sm font-medium <?php echo $transaction['type'] === 'sale' ? 'text-green-600' : 'text-red-600'; ?>">
-                                    <?php echo ($transaction['type'] === 'sale' ? '+' : '-') . formatCurrency($transaction['amount']); ?>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
+        <div class="p-6">
+            <canvas id="cashFlowChart" height="250"></canvas>
         </div>
     </div>
 
+    <div class="lg:col-span-2 bg-white rounded-xl shadow-lg card-shadow">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Aktivitas Terkini</h3>
+            </div>
+            <a href="reports.php?report_type=journal" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Lihat Semua</a>
+        </div>
+        <div class="flow-root">
+            <ul role="list" class="divide-y divide-gray-200">
+                <?php if (empty($recent_transactions)): ?>
+                    <li class="p-6 text-center">
+                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                        </svg>
+                        <h3 class="mt-2 text-sm font-medium text-gray-900">Belum ada transaksi</h3>
+                        <p class="mt-1 text-sm text-gray-500">Mulai dengan membuat transaksi baru.</p>
+                    </li>
+                <?php else: ?>
+                    <?php foreach ($recent_transactions as $transaction): ?>
+                        <li class="p-4 hover:bg-gray-50 transition-colors duration-200">
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0">
+                                    <?php if ($transaction['type'] === 'sale'): ?>
+                                        <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                                            <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                            </svg>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
+                                            <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                                            </svg>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-semibold text-gray-800 truncate"><?php echo $transaction['description']; ?></p>
+                                    <p class="text-sm text-gray-500 truncate"><?php echo formatDate($transaction['tanggal']); ?></p>
+                                </div>
+                                <div class="text-right text-sm whitespace-nowrap <?php echo $transaction['type'] === 'sale' ? 'text-green-600' : 'text-red-600'; ?>">
+                                    <p class="font-semibold">
+                                        <?php echo ($transaction['type'] === 'sale' ? '+' : '-') . formatCurrency($transaction['amount']); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
     <!-- Low Stock Alert -->
     <?php if (!empty($low_stock)): ?>
-        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-medium text-yellow-800">Low Stock Alert</h3>
-                    <div class="mt-2 text-sm text-yellow-700">
-                        <p>The following products are running low on stock:</p>
-                        <ul class="mt-1 list-disc list-inside">
-                            <?php foreach ($low_stock as $product): ?>
-                                <li><?php echo htmlspecialchars($product['nama_barang']); ?> (<?php echo $product['stok']; ?> remaining)</li>
-                            <?php endforeach; ?>
-                        </ul>
+        <div class="bg-white shadow-lg rounded-xl overflow-hidden mb-8">
+            <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 px-6 py-4">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="bg-white bg-opacity-20 rounded-full p-2">
+                            <svg class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
                     </div>
+                    <div class="ml-4">
+                        <h3 class="text-lg font-semibold text-white">Peringatan Stok Menipis</h3>
+                        <p class="text-yellow-100 text-sm">Beberapa produk membutuhkan perhatian segera</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4">
+                <div class="space-y-4">
+                    <?php foreach ($low_stock as $product): ?>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0">
+                                    <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+                                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($product['nama_barang']); ?></h4>
+                                    <p class="text-sm text-gray-500">Sisa stok: <span class="font-semibold text-yellow-600"><?php echo $product['stok']; ?> unit</span></p>
+                                </div>
+                            </div>
+                            <a href="products.php" class="inline-flex items-center px-3 py-1 border border-yellow-300 text-sm font-medium rounded-md text-yellow-700 bg-yellow-50 hover:bg-yellow-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                                Tambah Stok
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
