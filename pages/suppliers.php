@@ -105,14 +105,14 @@ include dirname(__DIR__) . '/components/header.php';
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Supplier Management</h1>
-                <p class="mt-1 text-sm text-gray-600">Manage suppliers and vendor information</p>
+                <h1 class="text-2xl font-bold text-gray-900">Manajemen Pemasok</h1>
+                <p class="mt-1 text-sm text-gray-600">Kelola informasi pemasok dan vendor</p>
             </div>
             <button onclick="openAddModal()" class="enhanced-button inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                Add Supplier
+                Tambah Pemasok
             </button>
         </div>
     </div>
@@ -189,7 +189,6 @@ include dirname(__DIR__) . '/components/header.php';
                                 </div>
                                 <div class="ml-4">
                                     <h3 class="text-base font-bold text-gray-900 leading-tight"><?php echo htmlspecialchars($supplier['nama_supplier']); ?></h3>
-                                    <p class="text-sm text-gray-500">Pemasok Utama</p>
                                 </div>
                             </div>
                             <div class="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -327,20 +326,19 @@ include dirname(__DIR__) . '/components/header.php';
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                 </svg>
             </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4">Delete Supplier</h3>
-            <p class="text-base text-gray-500 mb-6">Are you sure you want to delete <span id="deleteSupplierName" class="font-semibold"></span>? This action cannot be undone.</p>
-            
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Hapus Pemasok</h3>
+            <p class="text-base text-gray-500 mb-6">Apakah Anda yakin ingin menghapus <span id="deleteSupplierName" class="font-semibold"></span>? Tindakan ini tidak dapat dibatalkan.</p>
             <form method="POST" class="flex justify-center space-x-4">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" id="delete_id_supplier" name="id_supplier">
                 
                 <button type="button" onclick="closeDeleteModal()" 
                         class="px-6 py-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200">
-                    Cancel
+                    Batal
                 </button>
                 <button type="submit" 
                         class="px-6 py-3 text-base font-medium text-white bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all duration-200">
-                    Delete
+                    Hapus
                 </button>
             </form>
         </div>

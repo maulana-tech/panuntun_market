@@ -104,12 +104,12 @@ include dirname(__DIR__) . '/components/header.php';
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Purchase Transactions</h1>
-                <p class="mt-1 text-sm text-gray-600">Record purchases and manage supplier transactions</p>
+                <h1 class="text-2xl font-bold text-gray-900">Transaksi Pembelian</h1>
+                <p class="mt-1 text-sm text-gray-600">Catat pembelian dan kelola transaksi pemasok</p>
             </div>
             <button onclick="openPurchaseModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                New Purchase
+                Pembelian Baru
             </button>
         </div>
     </div>
@@ -123,13 +123,13 @@ include dirname(__DIR__) . '/components/header.php';
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
-            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-red-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Today's Expenses</dt><dd class="text-lg font-medium text-gray-900"><?php echo formatCurrency($today_summary['total_amount'] ?? 0); ?></dd></dl></div></div></div>
+            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-red-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Pengeluaran Hari Ini</dt><dd class="text-lg font-medium text-gray-900"><?php echo formatCurrency($today_summary['total_amount'] ?? 0); ?></dd></dl></div></div></div>
         </div>
         <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
-            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Today's Purchases</dt><dd class="text-lg font-medium text-gray-900"><?php echo $today_summary['total_transactions'] ?? 0; ?></dd></dl></div></div></div>
+            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Pembelian Hari Ini</dt><dd class="text-lg font-medium text-gray-900"><?php echo $today_summary['total_transactions'] ?? 0; ?></dd></dl></div></div></div>
         </div>
         <div class="bg-white overflow-hidden shadow-sm rounded-lg card-shadow">
-            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-purple-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Active Suppliers</dt><dd class="text-lg font-medium text-gray-900"><?php echo count($suppliers); ?></dd></dl></div></div></div>
+            <div class="p-6"><div class="flex items-center"><div class="flex-shrink-0"><div class="w-8 h-8 bg-purple-100 rounded-md flex items-center justify-center"><svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div></div><div class="ml-5 w-0 flex-1"><dl><dt class="text-sm font-medium text-gray-500 truncate">Pemasok Aktif</dt><dd class="text-lg font-medium text-gray-900"><?php echo count($suppliers); ?></dd></dl></div></div></div>
         </div>
     </div>
     
@@ -201,22 +201,25 @@ include dirname(__DIR__) . '/components/header.php';
         </table>
     </div>
 </div>
+<div class="mb-8 p-4">
+
+</div>
 </div>
 
 <div id="purchaseModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
     <div class="relative top-10 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
         <div class="mt-3">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-medium text-gray-900">New Purchase Transaction</h3>
+                <h3 class="text-lg font-medium text-gray-900">Transaksi Pembelian Baru</h3>
                 <button onclick="closePurchaseModal()" class="text-gray-400 hover:text-gray-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
             <form method="POST" class="space-y-4">
                 <input type="hidden" name="action" value="add_purchase">
                 
                 <div>
-                    <label for="id_supplier" class="block text-sm font-medium text-gray-700">Supplier *</label>
+                    <label for="id_supplier" class="block text-sm font-medium text-gray-700">Pemasok *</label>
                     <select id="id_supplier" name="id_supplier" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">Select Supplier</option>
+                        <option value="">Pilih Pemasok</option>
                         <?php foreach ($suppliers as $supplier): ?>
                             <option value="<?php echo $supplier['id_supplier']; ?>"><?php echo htmlspecialchars($supplier['nama_supplier']); ?></option>
                         <?php endforeach; ?>
@@ -224,9 +227,9 @@ include dirname(__DIR__) . '/components/header.php';
                 </div>
                 
                 <div>
-                    <label for="kode_barang" class="block text-sm font-medium text-gray-700">Product *</label>
+                    <label for="kode_barang" class="block text-sm font-medium text-gray-700">Produk *</label>
                     <select id="kode_barang" name="kode_barang" required class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                        <option value="">Select Product</option>
+                        <option value="">Pilih Produk</option>
                         <?php foreach ($products as $product): ?>
                             <option value="<?php echo $product['kode_barang']; ?>"><?php echo htmlspecialchars($product['nama_barang']); ?></option>
                         <?php endforeach; ?>
@@ -240,19 +243,19 @@ include dirname(__DIR__) . '/components/header.php';
                     </div>
                     
                     <div>
-                        <label for="harga" class="block text-sm font-medium text-gray-700">Unit Price *</label>
+                        <label for="harga" class="block text-sm font-medium text-gray-700">Harga Satuan *</label>
                         <input type="number" id="harga" name="harga" step="0.01" min="0" required onchange="calculatePurchaseTotal()" class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
                 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Total Amount</label>
+                    <label class="block text-sm font-medium text-gray-700">Total Pembelian</label>
                     <div id="purchaseTotalAmount" class="mt-1 text-lg font-bold text-blue-600">Rp 0</div>
                 </div>
                 
                 <div class="flex justify-end space-x-3 pt-4">
-                    <button type="button" onclick="closePurchaseModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Cancel</button>
-                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Record Purchase</button>
+                    <button type="button" onclick="closePurchaseModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">Batal</button>
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Catat Pembelian</button>
                 </div>
             </form>
         </div>

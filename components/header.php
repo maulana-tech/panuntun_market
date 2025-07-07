@@ -91,24 +91,15 @@
                         <div class="relative flex flex-1">
                         </div>
                         <div class="flex items-center gap-x-2 lg:gap-x-4 bg-white border border-gray-200 rounded-xl shadow-sm p-2.5 text-gray-300 backdrop-blur-md  m-3">
-                       
-
-                            
-
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" type="button" class="-m-1.5 flex items-center p-1.5">
                                     <span class="sr-only">Open user menu</span>
                                     <img class="h-8 w-8 rounded-full bg-gray-50" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                                     <span class="hidden lg:flex lg:items-center">
                                         <span class="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true"><?php echo htmlspecialchars(getCurrentUser()['nama']); ?></span>
-                                        <svg class="ml-2 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                                        </svg>
+                                       
                                     </span>
                                 </button>
-                                <div x-show="open" @click.away="open = false" class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none text-center" x-transition>
-                                    <a href="<?php echo BASE_URL; ?>/auth/logout.php" class="block px-3 py-1 text-sm leading-6 text-gray-900">Sign Out</a>
-                                </div>
                             </div>
                         </div>
                     </div>

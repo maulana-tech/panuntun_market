@@ -177,7 +177,7 @@ include dirname(__DIR__) . '/components/header.php';
 
 <div class="main-content-wrapper">
     <header class="dashboard-header">
-        <h1 class="dashboard-title">Dashboard</h1>
+        <h1 class="dashboard-title">Beranda</h1>
         <p class="dashboard-subtitle">Selamat datang kembali, <?php echo htmlspecialchars($user['nama']); ?>!</p>
     </header>
 

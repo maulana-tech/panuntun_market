@@ -89,14 +89,14 @@ include dirname(__DIR__) . '/components/header.php';
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900">Sales Transactions</h1>
-                <p class="mt-1 text-sm text-gray-600">Record sales and manage transactions</p>
+                <h1 class="text-2xl font-bold text-gray-900">Transaksi Penjualan</h1>
+                <p class="mt-1 text-sm text-gray-600">Catat penjualan dan kelola transaksi penjualan</p>
             </div>
             <button onclick="openSaleModal()" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                New Sale
+                Catat Penjualan
             </button>
         </div>
     </div>
@@ -131,7 +131,7 @@ include dirname(__DIR__) . '/components/header.php';
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Today's Revenue</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total Pendapatan Hari Ini</dt>
                             <dd class="text-lg font-medium text-gray-900"><?php echo formatCurrency($today_summary['total_amount'] ?? 0); ?></dd>
                         </dl>
                     </div>
@@ -146,7 +146,7 @@ include dirname(__DIR__) . '/components/header.php';
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Today's Transactions</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Total Transaksi Hari Ini</dt>
                             <dd class="text-lg font-medium text-gray-900"><?php echo $today_summary['total_transactions'] ?? 0; ?></dd>
                         </dl>
                     </div>
@@ -161,7 +161,7 @@ include dirname(__DIR__) . '/components/header.php';
                     </div>
                     <div class="ml-5 w-0 flex-1">
                         <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Available Products</dt>
+                            <dt class="text-sm font-medium text-gray-500 truncate">Produk Tersedia</dt>
                             <dd class="text-lg font-medium text-gray-900"><?php echo count($products); ?></dd>
                         </dl>
                     </div>
@@ -233,7 +233,7 @@ include dirname(__DIR__) . '/components/header.php';
     <div class="relative top-10 mx-auto p-5 border w-full max-w-md shadow-lg rounded-md bg-white">
         <div class="mt-3">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-medium text-gray-900">New Sale Transaction</h3>
+                <h3 class="text-lg font-medium text-gray-900">  </h3>
                 <button onclick="closeSaleModal()" class="text-gray-400 hover:text-gray-600">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>

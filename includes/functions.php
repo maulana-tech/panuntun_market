@@ -6,14 +6,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once dirname(__DIR__) . '/config/config.php';
 
-class Database {
+class Database
+{
     private $host = DB_HOST;
     private $db_name = DB_NAME;
     private $username = DB_USER;
     private $password = DB_PASS;
     private $conn;
 
-    public function getConnection() {
+    public function getConnection()
+    {
         $this->conn = null;
         try {
             // Use socket for localhost connections in XAMPP
@@ -22,11 +24,11 @@ class Database {
             } else {
                 $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->db_name;
             }
-            
+
             $this->conn = new PDO($dsn, $this->username, $this->password);
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
+        } catch (PDOException $exception) {
             echo "Connection error: " . $exception->getMessage();
         }
         return $this->conn;
@@ -34,63 +36,72 @@ class Database {
 }
 
 // Authentication helper functions
-function isLoggedIn() {
+function isLoggedIn()
+{
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
-function requireLogin() {
+function requireLogin()
+{
     if (!isLoggedIn()) {
-        header('Location: login.php');
+        header('Location: ../auth/login.php');
         exit();
     }
 }
 
-function getCurrentUser() {
+function getCurrentUser()
+{
     if (!isLoggedIn()) {
         return null;
     }
-    
+
     $database = new Database();
     $db = $database->getConnection();
-    
+
     $query = "SELECT id_pengguna, nama, jabatan, email FROM pengguna WHERE id_pengguna = :id";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':id', $_SESSION['user_id']);
     $stmt->execute();
-    
+
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function logout() {
+function logout()
+{
     session_destroy();
     header('Location: login.php');
     exit();
 }
 
 // Utility functions
-function sanitizeInput($data) {
+function sanitizeInput($data)
+{
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
 
-function formatCurrency($amount) {
+function formatCurrency($amount)
+{
     return 'Rp ' . number_format($amount, 0, ',', '.');
 }
 
-function formatDate($date) {
+function formatDate($date)
+{
     return date('d/m/Y', strtotime($date));
 }
 
-function formatDateTime($datetime) {
+function formatDateTime($datetime)
+{
     return date('d/m/Y H:i:s', strtotime($datetime));
 }
 
-function showAlert($message, $type = 'info') {
+function showAlert($message, $type = 'info')
+{
     $alertClass = '';
     $iconClass = '';
-    
+
     switch ($type) {
         case 'success':
             $alertClass = 'bg-green-50 border-green-200 text-green-800';
@@ -108,7 +119,7 @@ function showAlert($message, $type = 'info') {
             $alertClass = 'bg-blue-50 border-blue-200 text-blue-800';
             $iconClass = 'text-blue-400';
     }
-    
+
     return "
     <div class='rounded-md border p-4 mb-4 {$alertClass}'>
         <div class='flex'>
@@ -125,19 +136,22 @@ function showAlert($message, $type = 'info') {
 }
 
 // CSRF Protection
-function generateCSRFToken() {
+function generateCSRFToken()
+{
     if (!isset($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
     return $_SESSION['csrf_token'];
 }
 
-function validateCSRFToken($token) {
+function validateCSRFToken($token)
+{
     return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
 
 // user role checks
-function requireAdmin() {
+function requireAdmin()
+{
     $user = getCurrentUser();
     if (!$user || $user['jabatan'] !== 'Admin') {
         $_SESSION['alert'] = ['type' => 'error', 'message' => 'Akses ditolak. Hanya Admin yang dapat mengakses halaman ini.'];
@@ -145,5 +159,3 @@ function requireAdmin() {
         exit();
     }
 }
-?>
-
