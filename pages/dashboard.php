@@ -422,10 +422,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (document.getElementById('cashFlowChart')) {
         new Chart(document.getElementById('cashFlowChart').getContext('2d'), {
-            type: 'bar',
+            type: 'line',
             data: { labels: chartData.labels, datasets: [
-                { label: 'Pemasukan', data: chartData.inflows, backgroundColor: 'rgba(75, 192, 192, 0.7)', borderColor: 'rgba(75, 192, 192, 1)', borderRadius: 6 },
-                { label: 'Pengeluaran', data: chartData.outflows, backgroundColor: 'rgba(255, 99, 132, 0.7)', borderColor: 'rgba(255, 99, 132, 1)', borderRadius: 6 }
+                { label: 'Pemasukan', data: chartData.inflows, backgroundColor: 'rgba(75, 192, 192, 0.1)', borderColor: 'rgba(75, 192, 192, 1)', borderWidth: 3, tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: 'rgba(75, 192, 192, 1)' },
+                { label: 'Pengeluaran', data: chartData.outflows, backgroundColor: 'rgba(255, 99, 132, 0.1)', borderColor: 'rgba(255, 99, 132, 1)', borderWidth: 3, tension: 0.4, fill: true, pointRadius: 5, pointBackgroundColor: 'rgba(255, 99, 132, 1)' }
             ] }, options: baseOptions
         });
     }

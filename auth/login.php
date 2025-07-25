@@ -79,7 +79,7 @@ $pageTitle = 'Login';
                 <?php echo APP_NAME; ?>
             </h1>
             <p class="mt-4 text-xl">
-                Manajemen Stok untuk Minimarket Panuntun
+                Sistem pengelolaan kas yang berbasis web pada minimarket panuntun
             </p>
         </div>
     </div>

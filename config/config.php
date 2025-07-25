@@ -8,7 +8,7 @@ define('DB_PASS', '');
 // Application configuration
 define('APP_NAME', 'Cash Flow ');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'http://localhost:8080/panuntun_market');
+define('BASE_URL', 'http://localhost/panuntun_market');
 
 // Security configuration
 define('JWT_SECRET', 'your-secret-key-here-change-in-production');
