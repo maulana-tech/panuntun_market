@@ -1,14 +1,14 @@
 <?php
 // Database configuration
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'db_minimarket_panuntun');
+define('DB_NAME', 'db_market');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 
 // Application configuration
-define('APP_NAME', 'Cash Flow ');
+define('APP_NAME', 'Panuntun');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', 'http://localhost/panuntun_market');
+define('BASE_URL', 'http://localhost:/panuntun_market');
 
 // Security configuration
 define('JWT_SECRET', 'your-secret-key-here-change-in-production');
