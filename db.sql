@@ -110,7 +110,8 @@ CREATE INDEX idx_kas_tanggal ON kas(tgl_transaksi);
 -- Insert default admin user (password: admin123)
 -- Password hash for 'admin123' using bcrypt
 INSERT IGNORE INTO pengguna (nama, jabatan, email, password) VALUES 
-('Administrator', 'Admin', 'admin@panuntun.com', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBdXfs2Stk5v9W');
+('Administrator', 'Admin', 'admin@panuntun.com', '$2y$10$Vl2ZgHqxQGr4VHBBProvduGN7T6dqhATPiXQMbTYLRXJgE8sKdoqq'),
+('Owner', 'Owner', 'owner@panuntun.com', '$2y$10$5YF0GD4h0JTtVSLqTBXt1.OwB76Z6j8wIcmENjcnt0zA3Mlq3Ksgi');
 
 -- Insert sample data for testing
 INSERT IGNORE INTO supplier (nama_supplier, no_tlp, alamat) VALUES 
@@ -131,51 +132,81 @@ INSERT IGNORE INTO barang (nama_barang, stok) VALUES
 ('Air Mineral 600ml', 100);
 
 -- Triggers for automatic cash flow recording
+-- Fix for MySQL Error 1093: Table 'kas' is specified twice
+-- This script fixes the trigger that causes the error
+
+-- Create a corrected trigger that doesn't reference kas table in the subquery
 DELIMITER $$
 
 CREATE TRIGGER tr_penjualan_kas_masuk
 AFTER INSERT ON penjualan
 FOR EACH ROW
 BEGIN
+    DECLARE current_saldo INT DEFAULT 0;
+    DECLARE new_kas_masuk_id INT;
+    
+    -- Insert into kas_masuk first
     INSERT INTO kas_masuk (id_penjualan, keterangan, tgl_transaksi, jumlah)
     VALUES (NEW.id_penjualan, CONCAT('Penjualan ', NEW.nama_barang), NEW.tgl_jual, NEW.total_penjualan);
     
+    -- Get the ID of the kas_masuk record just inserted
+    SET new_kas_masuk_id = LAST_INSERT_ID();
+    
+    -- Update stock
     UPDATE barang 
     SET stok = stok - NEW.qty,
         updated_at = CURRENT_TIMESTAMP
     WHERE kode_barang = NEW.kode_barang;
     
+    -- Get current saldo separately
+    SELECT COALESCE(MAX(saldo), 0) INTO current_saldo FROM kas;
+    
+    -- Insert into kas with the calculated saldo
     INSERT INTO kas (id_kas_masuk, tgl_transaksi, ket_transaksi, saldo)
     VALUES (
-        (SELECT id_kas_masuk FROM kas_masuk WHERE id_penjualan = NEW.id_penjualan),
+        new_kas_masuk_id,
         NEW.tgl_jual,
         CONCAT('Kas Masuk - Penjualan ', NEW.nama_barang),
-        (SELECT COALESCE(MAX(saldo), 0) FROM kas) + NEW.total_penjualan
+        current_saldo + NEW.total_penjualan
     );
 END$$
+
 
 CREATE TRIGGER tr_pembelian_kas_keluar
 AFTER INSERT ON pembelian
 FOR EACH ROW
 BEGIN
+    DECLARE current_saldo INT DEFAULT 0;
+    DECLARE new_kas_keluar_id INT;
+    
+    -- Insert into kas_keluar first
     INSERT INTO kas_keluar (id_pembelian, keterangan, tgl_transaksi, jumlah)
     VALUES (NEW.id_pembelian, CONCAT('Pembelian ', NEW.nama_barang), NEW.tgl_beli, NEW.total_pembelian);
     
+    -- Get the ID of the kas_keluar record just inserted
+    SET new_kas_keluar_id = LAST_INSERT_ID();
+    
+    -- Update stock
     UPDATE barang 
     SET stok = stok + NEW.qty,
         updated_at = CURRENT_TIMESTAMP
     WHERE kode_barang = NEW.kode_barang;
     
+    -- Get current saldo separately
+    SELECT COALESCE(MAX(saldo), 0) INTO current_saldo FROM kas;
+    
+    -- Insert into kas with the calculated saldo
     INSERT INTO kas (id_kas_keluar, tgl_transaksi, ket_transaksi, saldo)
     VALUES (
-        (SELECT id_kas_keluar FROM kas_keluar WHERE id_pembelian = NEW.id_pembelian),
+        new_kas_keluar_id,
         NEW.tgl_beli,
         CONCAT('Kas Keluar - Pembelian ', NEW.nama_barang),
-        (SELECT COALESCE(MAX(saldo), 0) FROM kas) - NEW.total_pembelian
+        current_saldo - NEW.total_pembelian
     );
 END$$
 
 DELIMITER ;
+
 
 -- Views for reporting
 
