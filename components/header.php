@@ -13,7 +13,7 @@
 
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
 
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/custom.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/style.css">
