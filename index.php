@@ -45,4 +45,3 @@ if (isLoggedIn()) {
         echo "Login page not found";
     }
 }
-?>
