@@ -62,32 +62,32 @@ try {
     error_log("Dashboard Error: " . $e->getMessage());
 }
 
-// --- DATA ARUS KAS 6 BULAN ---
+// --- DATA ARUS KAS 7 HARI TERAKHIR ---
 $query_cash_flow = "
     SELECT 
-        month,
+        DATE(transaction_date) as day,
         COALESCE(SUM(CASE WHEN type = 'pemasukan' THEN amount ELSE 0 END), 0) as total_pemasukan,
         COALESCE(SUM(CASE WHEN type = 'pengeluaran' THEN amount ELSE 0 END), 0) as total_pengeluaran,
-        COALESCE(SUM(CASE WHEN type = 'pemasukan' THEN amount ELSE -amount END), 0) as saldo_bulan
+        COALESCE(SUM(CASE WHEN type = 'pemasukan' THEN amount ELSE -amount END), 0) as saldo_hari
     FROM (
         SELECT 
-            DATE_FORMAT(tgl_jual, '%Y-%m') as month,
+            tgl_jual as transaction_date,
             'pemasukan' as type,
             total_penjualan as amount
         FROM penjualan 
-        WHERE tgl_jual >= '2024-01-01'
+        WHERE tgl_jual >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
         
         UNION ALL
         
         SELECT 
-            DATE_FORMAT(tgl_beli, '%Y-%m') as month,
+            tgl_beli as transaction_date,
             'pengeluaran' as type,
             total_pembelian as amount
         FROM pembelian 
-        WHERE tgl_beli >= '2024-01-01'
+        WHERE tgl_beli >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
     ) as all_transactions
-    GROUP BY month 
-    ORDER BY month ASC
+    GROUP BY day 
+    ORDER BY day ASC
 ";
 
 try {
@@ -96,16 +96,16 @@ try {
     $cash_flow_data = [];
 }
 
-// Jika tidak ada data, buat data kosong untuk 6 bulan terakhir
+// Jika tidak ada data, buat data kosong untuk 7 hari terakhir
 if (empty($cash_flow_data)) {
     $cash_flow_data = [];
-    for ($i = 5; $i >= 0; $i--) {
-        $month = date('Y-m', strtotime("-$i months"));
+    for ($i = 6; $i >= 0; $i--) {
+        $day = date('Y-m-d', strtotime("-$i days"));
         $cash_flow_data[] = [
-            'month' => $month,
+            'day' => $day,
             'total_pemasukan' => 0,
             'total_pengeluaran' => 0,
-            'saldo_bulan' => 0
+            'saldo_hari' => 0
         ];
     }
 }
@@ -140,7 +140,7 @@ if ($isAdmin) {
             FROM pembelian
         ) as all_transactions 
         ORDER BY transaction_date DESC 
-        LIMIT 10
+        LIMIT 5
     ")->fetchAll(PDO::FETCH_ASSOC);
 } else {
     // Data untuk Owner
@@ -390,7 +390,7 @@ include dirname(__DIR__) . '/components/header.php';
                             <p class="kpi-label">Total Jenis Produk</p>
                             <div class="kpi-icon bg-purple-100 text-purple-600">
                                 <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 00-2 2v2M7 7h10"></path>
                                 </svg>
                             </div>
                         </div>
@@ -406,7 +406,7 @@ include dirname(__DIR__) . '/components/header.php';
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2 main-card">
                     <div class="main-card-header">
-                        <h3 class="main-card-title">Tren Pemasukan & Pengeluaran (6 Bulan)</h3>
+                        <h3 class="main-card-title">Tren Pemasukan & Pengeluaran (7 Hari Terakhir)</h3>
                     </div>
                     <div class="main-card-body">
                         <div style="height: 350px;"><canvas id="cashFlowChart"></canvas></div>
@@ -552,7 +552,7 @@ include dirname(__DIR__) . '/components/header.php';
                     <?php if (empty($top_selling_products)): ?>
                         <div class="col-span-full text-center py-10">
                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2H5a2 2 0 00-2 2v2M7 7h10"></path>
                             </svg>
                             <p class="text-gray-500 mt-2">Belum ada penjualan bulan ini</p>
                         </div>
@@ -577,7 +577,7 @@ include dirname(__DIR__) . '/components/header.php';
 // --- JavaScript untuk Grafik ---
 $js_data = [];
 $js_data['labels'] = array_map(function ($d) {
-    return date('M Y', strtotime($d['month'] . '-01'));
+    return date('d M', strtotime($d['day']));
 }, $cash_flow_data);
 $js_data['pemasukan'] = array_map(function ($val) {
     return floatval($val ?: 0);
@@ -587,7 +587,7 @@ $js_data['pengeluaran'] = array_map(function ($val) {
 }, array_column($cash_flow_data, 'total_pengeluaran'));
 $js_data['saldo'] = array_map(function ($val) {
     return floatval($val ?: 0);
-}, array_column($cash_flow_data, 'saldo_bulan'));
+}, array_column($cash_flow_data, 'saldo_hari'));
 
 
 
@@ -669,7 +669,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Tren Pemasukan vs Pengeluaran (6 Bulan Terakhir)',
                             font: {
                                 size: 16,
                                 weight: 'bold'
