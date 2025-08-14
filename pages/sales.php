@@ -259,12 +259,23 @@ include dirname(__DIR__) . '/components/header.php';
 
                 <div>
                     <label for="kode_barang" class="block text-sm font-medium text-gray-700">Product *</label>
+                    <div class="relative">
+                        <input type="text" id="productSearch" placeholder="Search product..."
+                            class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 pr-8 focus:outline-none focus:ring-green-500 focus:border-green-500"
+                            autocomplete="off">
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
                     <select id="kode_barang" name="kode_barang" required
-                        class="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-green-500 focus:border-green-500">
+                        class="mt-2 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-green-500 focus:border-green-500">
                         <option value="">Select Product</option>
                         <?php foreach ($products as $product): ?>
                             <option value="<?php echo $product['kode_barang']; ?>"
-                                data-stock="<?php echo $product['stok']; ?>">
+                                data-stock="<?php echo $product['stok']; ?>"
+                                data-name="<?php echo strtolower(htmlspecialchars($product['nama_barang'])); ?>">
                                 <?php echo htmlspecialchars($product['nama_barang']); ?>
                                 (Stock: <?php echo $product['stok']; ?>)
                             </option>
@@ -308,14 +319,84 @@ include dirname(__DIR__) . '/components/header.php';
 // --- MODIFIKASI: JavaScript disederhanakan karena harga diinput manual ---
 $additionalJS = "
 <script>
+let allProducts = [];
+
 function openSaleModal() {
     document.getElementById('saleModal').classList.remove('hidden');
+    initializeProductSearch();
 }
 
 function closeSaleModal() {
     document.getElementById('saleModal').classList.add('hidden');
     document.getElementById('saleModal').querySelector('form').reset();
     document.getElementById('totalAmount').textContent = 'Rp 0';
+    // Reset search
+    document.getElementById('productSearch').value = '';
+    showAllProducts();
+}
+
+function initializeProductSearch() {
+    const select = document.getElementById('kode_barang');
+    const searchInput = document.getElementById('productSearch');
+    
+    // Store all products for filtering
+    allProducts = Array.from(select.options).slice(1); // Skip first empty option
+    
+    // Add search functionality
+    searchInput.addEventListener('input', function() {
+        filterProducts(this.value);
+    });
+    
+    // Clear search when product is selected
+    select.addEventListener('change', function() {
+        if (this.value) {
+            const selectedOption = this.options[this.selectedIndex];
+            searchInput.value = selectedOption.text.split(' (Stock:')[0];
+        }
+    });
+}
+
+function filterProducts(searchTerm) {
+    const select = document.getElementById('kode_barang');
+    const searchLower = searchTerm.toLowerCase();
+    
+    // Clear existing options except the first one
+    select.innerHTML = '<option value=\"\">Select Product</option>';
+    
+    if (searchTerm.trim() === '') {
+        // Show all products if search is empty
+        showAllProducts();
+        return;
+    }
+    
+    // Filter products based on search term
+    const filteredProducts = allProducts.filter(option => {
+        const productName = option.getAttribute('data-name');
+        return productName.includes(searchLower);
+    });
+    
+    // Add filtered products to select
+    filteredProducts.forEach(option => {
+        select.appendChild(option.cloneNode(true));
+    });
+    
+    // Show message if no products found
+    if (filteredProducts.length === 0) {
+        const noResultOption = document.createElement('option');
+        noResultOption.value = '';
+        noResultOption.textContent = 'No products found';
+        noResultOption.disabled = true;
+        select.appendChild(noResultOption);
+    }
+}
+
+function showAllProducts() {
+    const select = document.getElementById('kode_barang');
+    select.innerHTML = '<option value=\"\">Select Product</option>';
+    
+    allProducts.forEach(option => {
+        select.appendChild(option.cloneNode(true));
+    });
 }
 
 function calculateTotal() {
