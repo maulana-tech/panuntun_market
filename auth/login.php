@@ -20,21 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $database = new Database();
         $db = $database->getConnection();
-
         $query = "SELECT id_pengguna, nama, jabatan, email, password FROM pengguna WHERE email = :email";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
-
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
             if (password_verify($password, $user['password'])) {
                 $_SESSION['user_id'] = $user['id_pengguna'];
                 $_SESSION['user_name'] = $user['nama'];
                 $_SESSION['user_role'] = $user['jabatan'];
                 $_SESSION['user_email'] = $user['email'];
-
                 header('Location: /panuntun_market/pages/dashboard.php');
                 exit();
             } else {
