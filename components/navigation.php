@@ -35,7 +35,8 @@ $navigation = [
         'roles' => ['Admin'], // Hanya dapat diakses oleh Admin
         'children' => [
             ['name' => 'Penjualan', 'href' => BASE_URL . '/pages/sales.php', 'current' => $currentPage === 'sales'],
-            ['name' => 'Pembelian', 'href' => BASE_URL . '/pages/purchases.php', 'current' => $currentPage === 'purchases']
+            ['name' => 'Pembelian', 'href' => BASE_URL . '/pages/purchases.php', 'current' => $currentPage === 'purchases'],
+            ['name' => 'Rekap Penjualan', 'href' => BASE_URL . '/pages/RekapPenjualan.php', 'current' => $currentPage === 'RekapPenjualan']
         ]
     ],
     [
